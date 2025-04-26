@@ -15,6 +15,7 @@ import androidx.room.PrimaryKey;
         indices = @Index(value = "id_categoria"))
 
 public class Producto implements java.io.Serializable {
+
     @PrimaryKey(autoGenerate = true)
     private int id;
 

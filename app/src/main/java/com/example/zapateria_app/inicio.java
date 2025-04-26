@@ -34,13 +34,13 @@ public class inicio extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        // Configurar el listener de navegación
+//navegación
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 
             int itemId = item.getItemId();
             if (itemId == R.id.inventario) {
-                selectedFragment = new InventarioFracment();
+                selectedFragment = new InventarioFragment();
             } else if (itemId == R.id.compras) {
                 selectedFragment = new ComprasFragment();
             } else if (itemId == R.id.ventas) {

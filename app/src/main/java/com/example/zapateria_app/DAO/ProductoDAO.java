@@ -1,5 +1,6 @@
 package com.example.zapateria_app.DAO;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -35,4 +36,48 @@ public interface ProductoDAO {
 
     @Query("SELECT COUNT(*) FROM detalle_ventas WHERE id_producto = :productoId")
     int countVentasByProducto(int productoId);
+
+
+    @Query("SELECT p.*, i.stock as stock, i.costo_promedio as costoPromedio, c.nombre as nombreCategoria " +
+            "FROM productos p " +
+            "LEFT JOIN inventario_actual i ON p.id = i.id_producto " +
+            "LEFT JOIN categorias c ON p.id_categoria = c.id")
+    List<ProductoConStock> getAllProductosConStock();
+
+    // Clase para el resultado de la consulta
+    public static class ProductoConStock extends Producto {
+        @ColumnInfo(name = "stock")
+        private int stock;
+
+        @ColumnInfo(name = "costoPromedio")
+        private double costoPromedio;
+
+        @ColumnInfo(name = "nombreCategoria")
+        private String nombreCategoria;
+
+        // Getters y Setters
+        public int getStock() {
+            return stock;
+        }
+
+        public void setStock(int stock) {
+            this.stock = stock;
+        }
+
+        public double getCostoPromedio() {
+            return costoPromedio;
+        }
+
+        public void setCostoPromedio(double costoPromedio) {
+            this.costoPromedio = costoPromedio;
+        }
+
+        public String getNombreCategoria() {
+            return nombreCategoria;
+        }
+
+        public void setNombreCategoria(String nombreCategoria) {
+            this.nombreCategoria = nombreCategoria;
+        }
+    }
 }
