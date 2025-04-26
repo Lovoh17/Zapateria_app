@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Café claro principal -->
+    <color name="primary_light_beige">#FFF5EBE0</color>  /* Fondo principal */
+    <color name="secondary_latte">#FFE6D5C3</color>      /* Barras y cards */
+    <color name="accent_camel">#FFD1B899</color>         /* Botones principales */
+
+    <!-- Tonos medios para contraste -->
+    <color name="medium_wood">#FFB38B6D</color>          /* Títulos y texto importante */
+    <color name="dark_coffee">#FF8B5A2F</color>          /* Texto principal */
+
+    <!-- Colores funcionales (armonizados) -->
+    <color name="success_soft_green">#FFC8E6C9</color>   /* Confirmaciones */
+    <color name="warning_soft_orange">#FFFFE0B2</color>  /* Advertencias */
+    <color name="error_soft_red">#FFFFCDD2</color>       /* Errores */
+
+    <!-- Variantes para modo oscuro -->
+    <color name="dark_mocha">#FF5D4037</color>           /* Fondo oscuro */
+    <color name="dark_caramel">#FF795548</color>         /* Elementos oscuros */
+    <color name="light_cream">#FFD7CCC8</color>          /* Texto en modo oscuro */
+
+    <!-- Auxiliares -->
+    <color name="border_taupe">#FFBCAAA4</color>         /* Bordes y líneas */
+    <color name="highlight_vanilla">#FFFFF3E0</color>    /* Resaltados */
 </resources>

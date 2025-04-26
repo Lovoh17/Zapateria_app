@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/accent_camel"
     tools:context=".VentasFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Historial de Ventas"
+            android:textColor="@color/primary_light_beige"
             android:textSize="35dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
