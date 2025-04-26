@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_logo"
+        android:title="Logo"
+        app:showAsAction="always"
+        app:actionLayout="@layout/logo_toolbar"/>
+
+    <item android:id="@+id/action_search"
+        android:title="Inicio"
+        android:icon="@drawable/ic_home"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+    <item android:id="@+id/action_notifications"
+        android:title="Notificaciones"
+        android:icon="@drawable/ic_notifications"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_cart"
+        android:title="Carrito"
+        android:icon="@drawable/ic_cart"
+        app:showAsAction="ifRoom"/>
+</menu>
