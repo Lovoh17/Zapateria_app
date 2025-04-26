@@ -7,7 +7,6 @@ public class InventarioConProducto {
     private double costoPromedio;
     private double valorTotal;
 
-    // Getters y Setters
     public int getIdProducto() { return idProducto; }
     public void setIdProducto(int idProducto) { this.idProducto = idProducto; }
     public String getNombreProducto() { return nombreProducto; }
