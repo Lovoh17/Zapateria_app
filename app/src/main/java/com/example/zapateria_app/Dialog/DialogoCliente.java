@@ -29,46 +29,31 @@ public class DialogoCliente extends DialogFragment {
 
     public static DialogoCliente newInstance(Cliente cliente) {
         DialogoCliente fragment = new DialogoCliente();
-        Bundle args = new Bundle();
-        args.putSerializable("cliente", cliente);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            cliente = (Cliente) getArguments().getSerializable("cliente");
+        if (cliente != null) {
+            Bundle args = new Bundle();
+            args.putSerializable("cliente", cliente);
+            fragment.setArguments(args);
         }
+        return fragment;
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        try {
+        if (context instanceof OnClienteGuardadoListener) {
             listener = (OnClienteGuardadoListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " debe implementar OnClienteGuardadoListener");
         }
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_cliente, null);
 
-        etNombre = view.findViewById(R.id.etNombre);
-        etTelefono = view.findViewById(R.id.etTelefono);
-        etCorreo = view.findViewById(R.id.etCorreo);
-
-        if (cliente != null) {
-            etNombre.setText(cliente.getNombre());
-            etTelefono.setText(cliente.getTelefono());
-            etCorreo.setText(cliente.getCorreo());
-        }
+        initViews(view);
+        loadClienteData();
 
         builder.setView(view)
                 .setTitle(cliente == null ? "Nuevo Cliente" : "Editar Cliente")
@@ -76,6 +61,29 @@ public class DialogoCliente extends DialogFragment {
                 .setNegativeButton("Cancelar", (dialog, id) -> dismiss());
 
         AlertDialog dialog = builder.create();
+        setupDialogWindow(dialog);
+        return dialog;
+    }
+
+    private void initViews(View view) {
+        etNombre = view.findViewById(R.id.etNombre);
+        etTelefono = view.findViewById(R.id.etTelefono);
+        etCorreo = view.findViewById(R.id.etCorreo);
+    }
+
+    private void loadClienteData() {
+        if (getArguments() != null) {
+            cliente = (Cliente) getArguments().getSerializable("cliente");
+        }
+
+        if (cliente != null) {
+            etNombre.setText(cliente.getNombre());
+            etTelefono.setText(cliente.getTelefono());
+            etCorreo.setText(cliente.getCorreo());
+        }
+    }
+
+    private void setupDialogWindow(AlertDialog dialog) {
         dialog.setOnShowListener(dialogInterface -> {
             Window window = dialog.getWindow();
             if (window != null) {
@@ -86,38 +94,45 @@ public class DialogoCliente extends DialogFragment {
                 window.setAttributes(layoutParams);
             }
         });
-
-        return dialog;
     }
 
     private void guardarCliente() {
-        String nombre = etNombre.getText().toString().trim();
-        String telefono = etTelefono.getText().toString().trim();
-        String correo = etCorreo.getText().toString().trim();
-
-        if (nombre.isEmpty()) {
-            etNombre.setError("Nombre requerido");
+        if (!validateInputs()) {
             return;
         }
 
-        Cliente nuevoCliente;
-        if (cliente != null) {
-            // Editar cliente existente
-            nuevoCliente = cliente;
-            nuevoCliente.setNombre(nombre);
-            nuevoCliente.setTelefono(telefono);
-            nuevoCliente.setCorreo(correo);
-        } else {
-            // Crear nuevo cliente
-            nuevoCliente = new Cliente();
-            nuevoCliente.setNombre(nombre);
-            nuevoCliente.setTelefono(telefono);
-            nuevoCliente.setCorreo(correo);
-        }
+        Cliente nuevoCliente = prepareClienteData();
 
         if (listener != null) {
             listener.onClienteGuardado(nuevoCliente);
         }
         dismiss();
+    }
+
+    private boolean validateInputs() {
+        if (etNombre.getText().toString().trim().isEmpty()) {
+            etNombre.setError("Nombre requerido");
+            return false;
+        }
+        return true;
+    }
+
+    private Cliente prepareClienteData() {
+        String nombre = etNombre.getText().toString().trim();
+        String telefono = etTelefono.getText().toString().trim();
+        String correo = etCorreo.getText().toString().trim();
+
+        if (cliente != null) {
+            cliente.setNombre(nombre);
+            cliente.setTelefono(telefono);
+            cliente.setCorreo(correo);
+            return cliente;
+        } else {
+            return new Cliente(nombre, telefono, correo);
+        }
+    }
+
+    public void setOnClienteGuardadoListener(OnClienteGuardadoListener listener) {
+        this.listener = listener;
     }
 }

@@ -53,7 +53,7 @@ public class inicio extends AppCompatActivity {
             } else if (itemId == R.id.ventas) {
                 selectedFragment = new DetalleVentaFragment();
             }else if (itemId == R.id.movimientoInventario) {
-                selectedFragment = new ClientesFragment();
+                selectedFragment = new UsuariosFragment();
             }else if (itemId == R.id.usuarios) {
                 selectedFragment = new UsuariosFragment();
             }

@@ -8,30 +8,17 @@
     android:padding="24dp"
     android:background="@color/primary_light_beige">
 
-    <!-- Título del Formulario -->
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Editar Usuario"
-        android:textColor="@color/dark_coffee"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
     <!-- CardView contenedora -->
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:cardBackgroundColor="@color/secondary_latte"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitulo">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -57,9 +44,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:textColor="@color/dark_coffee"
                     android:maxLines="1"
-                    tools:text=""/>
+                    android:textColor="@color/dark_coffee"
+                    tools:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Campo Teléfono -->
@@ -82,9 +69,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    android:textColor="@color/dark_coffee"
                     android:maxLines="1"
-                    tools:text=""/>
+                    android:textColor="@color/dark_coffee"
+                    tools:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Campo Correo -->
@@ -107,9 +94,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/dark_coffee"
                     android:maxLines="1"
-                    tools:text=""/>
+                    android:textColor="@color/dark_coffee"
+                    tools:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Botón Registrar -->
@@ -122,11 +109,10 @@
                 android:textColor="@color/white"
                 app:backgroundTint="@color/accent_camel"
                 app:cornerRadius="4dp"
-                app:icon="@drawable/ic_shopping_cart"
                 app:iconTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tilCorreo"/>
+                app:layout_constraintTop_toBottomOf="@id/tilCorreo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,29 +9,18 @@
     android:background="@color/primary_light_beige">
 
     <!-- Título del Formulario -->
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Editar Empleado"
-        android:textColor="@color/dark_coffee"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <!-- CardView contenedora -->
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         app:cardBackgroundColor="@color/secondary_latte"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitulo">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -57,9 +46,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:textColor="@color/dark_coffee"
                     android:maxLines="1"
-                    tools:text=""/>
+                    android:textColor="@color/dark_coffee"
+                    tools:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Campo Teléfono -->
@@ -68,7 +57,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Teléfono"
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeColor="@color/border_taupe"
                 app:errorEnabled="true"
@@ -78,18 +66,16 @@
                 app:layout_constraintTop_toBottomOf="@id/tilNombre">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etTelefono"
+                    android:id="@+id/etPuesto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:textColor="@color/dark_coffee"
+                    android:hint="Puesto"
+                    android:inputType="textPersonName"
                     android:maxLines="1"
-                    tools:text=""/>
+                    android:textColor="@color/dark_coffee"
+                    tools:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Campo Correo -->
-
-            <!-- Botón Registrar -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilCorreo"
                 android:layout_width="0dp"

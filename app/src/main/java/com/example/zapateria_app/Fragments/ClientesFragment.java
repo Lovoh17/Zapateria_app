@@ -32,9 +32,14 @@ public class ClientesFragment extends Fragment implements ClienteAdapter.OnClien
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private ClienteAdapter adapter;
-    private Button fabAddCliente;
-    private List<ClienteDAO.ClienteConVentas> listaClientes = new ArrayList<>();
-    private Executor executor = Executors.newSingleThreadExecutor();
+    private Button btnAgregarCliente;
+    private List<Cliente> listaClientes = new ArrayList<>();
+    private final Executor executor = Executors.newSingleThreadExecutor();
+
+    public ClientesFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -43,83 +48,78 @@ public class ClientesFragment extends Fragment implements ClienteAdapter.OnClien
 
         recyclerView = view.findViewById(R.id.rvClientes);
         progressBar = view.findViewById(R.id.progressBar);
-        //boton para agregar cliente
-        fabAddCliente = view.findViewById(R.id.fabAddCliente);
+        btnAgregarCliente = view.findViewById(R.id.addCliente);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new ClienteAdapter(listaClientes, requireContext(), this);
+        recyclerView.setAdapter(adapter);
 
-        fabAddCliente.setOnClickListener(v -> {
+        btnAgregarCliente.setOnClickListener(v -> {
             DialogoCliente dialogo = new DialogoCliente();
-            dialogo.show(getParentFragmentManager(), "DialogoCrearCliente");
+            dialogo.setOnClienteGuardadoListener(this);
+            dialogo.show(getParentFragmentManager(), "DialogoAgregarCliente");
         });
 
         return view;
     }
 
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new ClienteAdapter(listaClientes, requireContext());
-        recyclerView.setAdapter(adapter);
         cargarClientes();
     }
 
     @Override
-    public void onEditarClick(ClienteDAO.ClienteConVentas clienteConVentas) {
-        DialogoCliente dialogo = DialogoCliente.newInstance(clienteConVentas.cliente);
+    public void onEditarClick(Cliente cliente) {
+        DialogoCliente dialogo = DialogoCliente.newInstance(cliente);
+        dialogo.setOnClienteGuardadoListener(this);
         dialogo.show(getParentFragmentManager(), "DialogoEditarCliente");
     }
 
     @Override
-    public void onBorrarClick(ClienteDAO.ClienteConVentas clienteConVentas) {
+    public void onBorrarClick(Cliente cliente) {
         new AlertDialog.Builder(requireContext())
                 .setTitle("Confirmar borrado")
-                .setMessage("¿Estás seguro de que quieres borrar a " + clienteConVentas.cliente.getNombre() + "?")
-                .setPositiveButton("Borrar", (dialog, which) -> borrarCliente(clienteConVentas))
+                .setMessage("¿Estás seguro de que quieres borrar a " + cliente.getNombre() + "?")
+                .setPositiveButton("Borrar", (dialog, which) -> borrarCliente(cliente))
                 .setNegativeButton("Cancelar", null)
                 .show();
     }
 
-    private void borrarCliente(ClienteDAO.ClienteConVentas clienteConVentas) {
-        progressBar.setVisibility(View.VISIBLE);
+    @Override
+    public void onEditarClick(ClienteDAO.ClienteConVentas cliente) {
 
+    }
+
+    private void borrarCliente(Cliente cliente) {
+        progressBar.setVisibility(View.VISIBLE);
         executor.execute(() -> {
             try {
-                databaseZapateria db = databaseZapateria.getInstance(getContext());
-
-                // Primero verificar si tiene ventas asociadas
-                int ventasAsociadas = db.clienteDAO().countVentasByCliente(clienteConVentas.cliente.getId());
-
-                if (ventasAsociadas > 0) {
-                    requireActivity().runOnUiThread(() -> {
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(),
-                                "No se puede borrar el cliente porque tiene ventas asociadas",
-                                Toast.LENGTH_LONG).show();
-                    });
-                    return;
-                }
-
-                // Si no tiene ventas, proceder con el borrado
-                int result = db.clienteDAO().deleteCliente(clienteConVentas.cliente);
+                databaseZapateria db = databaseZapateria.getInstance(requireContext());
+                int result = db.clienteDAO().deleteCliente(cliente);
 
                 requireActivity().runOnUiThread(() -> {
+                    progressBar.setVisibility(View.GONE);
                     if (result > 0) {
                         cargarClientes();
-                        Toast.makeText(getContext(), "Cliente borrado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Cliente eliminado", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getContext(), "Error al borrar cliente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Error al eliminar cliente", Toast.LENGTH_SHORT).show();
                     }
                 });
             } catch (Exception e) {
                 requireActivity().runOnUiThread(() -> {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getContext(), "Error al borrar cliente: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
             }
         });
+    }
+
+
+    @Override
+    public void onBorrarClick(ClienteDAO.ClienteConVentas cliente) {
+
     }
 
     @Override
@@ -127,7 +127,7 @@ public class ClientesFragment extends Fragment implements ClienteAdapter.OnClien
         progressBar.setVisibility(View.VISIBLE);
         executor.execute(() -> {
             try {
-                databaseZapateria db = databaseZapateria.getInstance(getContext());
+                databaseZapateria db = databaseZapateria.getInstance(requireContext());
 
                 if (cliente.getId() == 0) {
                     long id = db.clienteDAO().insertCliente(cliente);
@@ -159,8 +159,8 @@ public class ClientesFragment extends Fragment implements ClienteAdapter.OnClien
 
         executor.execute(() -> {
             try {
-                databaseZapateria db = databaseZapateria.getInstance(getContext());
-                List<ClienteDAO.ClienteConVentas> clientes = db.clienteDAO().getClientesConVentas();
+                databaseZapateria db = databaseZapateria.getInstance(requireContext());
+                List<Cliente> clientes = db.clienteDAO().getAllClientes();
 
                 requireActivity().runOnUiThread(() -> {
                     listaClientes.clear();

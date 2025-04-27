@@ -20,12 +20,22 @@ import com.example.zapateria_app.R;
 public class DialogoEmpleado extends DialogFragment {
 
     public interface OnEmpleadoGuardadoListener {
-        void OnEmpleadoGuardadoListener(Empleado cliente);
+        void onEmpleadoGuardado(Empleado empleado);
+    }
+    public interface OnEmpleadoEditarListener {
+        void OnEmpleadoEditarListener(Empleado empleado);
     }
 
     private OnEmpleadoGuardadoListener listener;
     private Empleado empleado;
     private EditText etNombre, etPuesto;
+
+    public void setOnEmpleadoGuardadoListener(OnEmpleadoGuardadoListener listener) {
+        this.listener = listener;
+    }
+    public void OnEmpleadoEditarListener(OnEmpleadoGuardadoListener listener) {
+        this.listener = listener;
+    }
 
     public static DialogoEmpleado newInstance(Empleado empleado) {
         DialogoEmpleado fragment = new DialogoEmpleado();
@@ -33,24 +43,6 @@ public class DialogoEmpleado extends DialogFragment {
         args.putSerializable("empleado", empleado);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            empleado = (Empleado) getArguments().getSerializable("empleado");
-        }
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            listener = (OnEmpleadoGuardadoListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " debe implementar OnClienteGuardadoListener");
-        }
     }
 
     @NonNull
@@ -61,37 +53,25 @@ public class DialogoEmpleado extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_empleado, null);
 
         etNombre = view.findViewById(R.id.etNombre);
-        etPuesto = view.findViewById(R.id.etTelefono);
+        etPuesto = view.findViewById(R.id.etPuesto);
 
         if (empleado != null) {
             etNombre.setText(empleado.getNombre());
             etPuesto.setText(empleado.getPuesto());
-
         }
 
         builder.setView(view)
-                .setTitle(empleado == null ? "Nuevo Cliente" : "Editar Cliente")
-                .setPositiveButton("Guardar", (dialog, id) -> guardarCliente())
+                .setTitle(empleado == null ? "Nuevo Empleado" : "Editar Empleado") // Corregido a "Empleado"
+                .setPositiveButton("Guardar", (dialog, id) -> guardarEmpleado())
                 .setNegativeButton("Cancelar", (dialog, id) -> dismiss());
 
-        AlertDialog dialog = builder.create();
-        dialog.setOnShowListener(dialogInterface -> {
-            Window window = dialog.getWindow();
-            if (window != null) {
-                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-                layoutParams.copyFrom(window.getAttributes());
-                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                window.setAttributes(layoutParams);
-            }
-        });
-
-        return dialog;
+        return builder.create();
     }
 
-    private void guardarCliente() {
+    private void guardarEmpleado() {
         String nombre = etNombre.getText().toString().trim();
-        String telefono = etPuesto.getText().toString().trim();
+        String puesto = etPuesto.getText().toString().trim();
+
         if (nombre.isEmpty()) {
             etNombre.setError("Nombre requerido");
             return;
@@ -99,20 +79,15 @@ public class DialogoEmpleado extends DialogFragment {
 
         Empleado nuevoEmpleado;
         if (empleado != null) {
-            // Editar cliente existente
             nuevoEmpleado = empleado;
             nuevoEmpleado.setNombre(nombre);
-           // nuevoEmpleado.setPuesto(etPuesto);
+            nuevoEmpleado.setPuesto(puesto);
         } else {
-            // Crear nuevo cliente
-            nuevoEmpleado = new Empleado();
-            nuevoEmpleado.setNombre(nombre);
-            //nuevoEmpleado.setPuesto(etPuesto);
-
+            nuevoEmpleado = new Empleado(nombre, puesto);
         }
 
         if (listener != null) {
-            listener.OnEmpleadoGuardadoListener(nuevoEmpleado);
+            listener.onEmpleadoGuardado(nuevoEmpleado);
         }
         dismiss();
     }

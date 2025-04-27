@@ -18,7 +18,6 @@
         android:padding="16dp"
         android:background="@color/light_cream">
 
-        <!-- ID Compra -->
         <TextView
             android:id="@+id/tvCompraId"
             android:layout_width="wrap_content"
@@ -29,7 +28,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="#0001"/>
 
-        <!-- Fecha -->
         <TextView
             android:id="@+id/tvFechaCompra"
             android:layout_width="wrap_content"
@@ -39,7 +37,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="15/05/2023"/>
 
-        <!-- Cliente -->
         <TextView
             android:id="@+id/tvCliente"
             android:layout_width="0dp"
@@ -51,7 +48,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvCompraId"
             tools:text="Cliente: Juan Pérez"/>
 
-        <!-- Productos -->
         <TextView
             android:id="@+id/tvProductos"
             android:layout_width="0dp"

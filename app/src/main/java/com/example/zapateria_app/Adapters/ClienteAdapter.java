@@ -11,33 +11,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zapateria_app.DAO.ClienteDAO;
+import com.example.zapateria_app.Models.Cliente;
 import com.example.zapateria_app.R;
 
 import java.util.List;
 
 public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteViewHolder> {
 
-    private List<ClienteDAO.ClienteConVentas> clientes;
+    private List<Cliente> clientes;
     private final Context context;
-    private OnClienteClickListener listener;
+    private final OnClienteClickListener listener;
 
     public interface OnClienteClickListener {
+        void onEditarClick(Cliente cliente);
+        void onBorrarClick(Cliente cliente);
+
         void onEditarClick(ClienteDAO.ClienteConVentas cliente);
+
         void onBorrarClick(ClienteDAO.ClienteConVentas cliente);
     }
-    public void setOnClienteClickListener(OnClienteClickListener listener) {
-        this.listener = listener;
-    }
 
-    public ClienteAdapter(List<ClienteDAO.ClienteConVentas> clientes, Context context) {
+    public ClienteAdapter(List<Cliente> clientes, Context context, OnClienteClickListener listener) {
         this.clientes = clientes;
         this.context = context;
-        if (context instanceof OnClienteClickListener) {
-            this.listener = (OnClienteClickListener) context;
-        } else {
-            throw new RuntimeException(context.toString() +
-                    " debe implementar OnClienteClickListener");
-        }
+        this.listener = listener;
     }
 
     @NonNull
@@ -50,7 +47,7 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
 
     @Override
     public void onBindViewHolder(@NonNull ClienteViewHolder holder, int position) {
-        ClienteDAO.ClienteConVentas cliente = clientes.get(position);
+        Cliente cliente = clientes.get(position);
         holder.bind(cliente);
 
         holder.btnEditar.setOnClickListener(v -> {
@@ -68,15 +65,10 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
 
     @Override
     public int getItemCount() {
-        return clientes.size();
+        return clientes != null ? clientes.size() : 0;
     }
 
-    public void setClientes(List<ClienteDAO.ClienteConVentas> nuevosClientes) {
-        this.clientes = nuevosClientes;
-        notifyDataSetChanged();
-    }
-
-    public void updateData(List<ClienteDAO.ClienteConVentas> nuevosClientes) {
+    public void actualizarClientes(List<Cliente> nuevosClientes) {
         this.clientes = nuevosClientes;
         notifyDataSetChanged();
     }
@@ -85,7 +77,6 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
         private final TextView tvNombre;
         private final TextView tvTelefono;
         private final TextView tvCorreo;
-        private final TextView tvVentas;
         private final ImageButton btnEditar;
         private final ImageButton btnBorrar;
 
@@ -94,16 +85,16 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
             tvNombre = itemView.findViewById(R.id.tvClienteNombre);
             tvTelefono = itemView.findViewById(R.id.tvClienteTelefono);
             tvCorreo = itemView.findViewById(R.id.tvClienteCorreo);
-            tvVentas = itemView.findViewById(R.id.tvClienteVentas);
             btnEditar = itemView.findViewById(R.id.btnEditar);
             btnBorrar = itemView.findViewById(R.id.btnBorrar);
         }
 
-        public void bind(ClienteDAO.ClienteConVentas cliente) {
+        public void bind(Cliente cliente) {
             tvNombre.setText(cliente.getNombre());
-            tvTelefono.setText(String.format("Teléfono: %s", cliente.getTelefono()));
-            tvCorreo.setText(String.format("Correo: %s", cliente.getCorreo()));
-            tvVentas.setText(String.format("Ventas: %d", cliente.getCantidadVentas()));
+            tvTelefono.setText(cliente.getTelefono() != null ?
+                    "Teléfono: " + cliente.getTelefono() : "");
+            tvCorreo.setText(cliente.getCorreo() != null ?
+                    "Correo: " + cliente.getCorreo() : "");
         }
     }
 }

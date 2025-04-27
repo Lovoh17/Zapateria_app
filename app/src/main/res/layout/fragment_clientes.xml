@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
 
         <!-- Título del inventario -->
+
         <TextView
             android:id="@+id/tvTituloClientes"
             android:layout_width="wrap_content"
@@ -21,6 +22,20 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.175"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvTituloClientes2"
+            android:layout_width="56dp"
+            android:layout_height="23dp"
+            android:layout_marginTop="28dp"
+            android:text="Nuevo"
+            android:textColor="@color/dark_mocha"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,21 +62,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAddCliente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:srcCompat="@drawable/ic_add_sale"
-            app:backgroundTint="@color/cardview_dark_background"
-            app:tint="@color/light_cream"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <Button
+            android:id="@+id/addCliente"
+            android:layout_width="21dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="60dp"
+            android:background="@drawable/ic_add_sale"
+            android:backgroundTint="@color/dark_caramel"
             app:layout_constraintEnd_toEndOf="parent"
-            app:elevation="6dp"
-            app:rippleColor="@color/dark_caramel"
-            app:borderWidth="0dp"
-            app:maxImageSize="28dp"
-            tools:ignore="ContentDescription"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
