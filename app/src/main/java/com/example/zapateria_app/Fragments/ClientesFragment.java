@@ -33,19 +33,16 @@ public class ClientesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflar el layout
+
         View view = inflater.inflate(R.layout.fragment_clientes, container, false);
 
-        // Inicializar vistas
         recyclerView = view.findViewById(R.id.rvClientes);
         progressBar = view.findViewById(R.id.progressBar);
 
-        // Configurar RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ClienteAdapter(listaClientes, getContext());
         recyclerView.setAdapter(adapter);
 
-        // Cargar datos
         cargarClientes();
 
         return view;

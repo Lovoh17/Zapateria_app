@@ -21,7 +21,7 @@
         android:baselineAligned="true">
 
         <TextView
-            android:id="@+id/tvClienteNombre"
+            android:id="@+id/tvEmpleadoNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
@@ -29,38 +29,18 @@
             android:textColor="?android:attr/textColorPrimary"
             android:ellipsize="end"
             android:maxLines="1"
-            tools:text="Juan Pérez"/>
+            tools:text="María González"/>
 
         <TextView
-            android:id="@+id/tvClienteTelefono"
+            android:id="@+id/tvEmpleadoPuesto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="16sp"
             android:textColor="?android:attr/textColorSecondary"
-            android:autoLink="phone"
-            android:inputType="phone"
-            tools:text="+1 234 567 890"/>
+            android:ellipsize="end"
+            android:maxLines="2"
+            tools:text="Gerente de Ventas Regional"/>
 
-        <TextView
-            android:id="@+id/tvClienteCorreo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="16sp"
-            android:textColor="?android:attr/textColorSecondary"
-            android:autoLink="email"
-            android:inputType="textEmailAddress"
-            tools:text="cliente@ejemplo.com"/>
-
-        <TextView
-            android:id="@+id/tvClienteVentas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            android:textColor="?android:attr/textColorTertiary"
-            tools:text="5 ventas realizadas"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -5,24 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/accent_camel"
-    tools:context=".Fragments.ComprasFragment">
+    tools:context=".Fragments.MovimientoInventarioFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="169dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="185dp"
-            android:text="Compras"
+            android:layout_marginStart="177dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="176dp"
+            android:text="Movimientos"
             android:textColor="@color/primary_light_beige"
             android:textSize="35dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.411"
+            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

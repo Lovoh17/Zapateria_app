@@ -5,6 +5,7 @@
     <item
         android:id="@+id/productos"
         android:title="productos"
+        android:icon="@drawable/ic_products"
         app:showAsAction="always"
         android:iconTint="@color/white"
         />
@@ -28,6 +29,7 @@
     <item
         android:id="@+id/movimientoInventario"
         android:title="Movimientos Inventario"
+        android:icon="@drawable/ic_move"
         app:showAsAction="always"
         android:iconTint="@color/white"
         />
@@ -35,6 +37,7 @@
     <item
         android:id="@+id/usuarios"
         android:title="usuarios"
+        android:icon="@drawable/ic_user"
         app:showAsAction="always"
         android:iconTint="@color/white"
         />
