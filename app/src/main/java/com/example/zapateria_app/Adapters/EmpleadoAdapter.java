@@ -20,8 +20,6 @@ public class EmpleadoAdapter extends RecyclerView.Adapter<EmpleadoAdapter.Emplea
     private List<Empleado> empleados;
     private final Context context;
 
-
-
     public EmpleadoAdapter(List<Empleado> empleados, Context context) {
         this.empleados = empleados;
         this.context = context;

@@ -11,4 +11,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="ventas_realizadas">%d ventas realizadas</string>
+    <string name="confirmar_borrado">Confirmar borrado</string>
+    <string name="mensaje_borrado">¿Estás seguro de que quieres borrar a %s?</string>
+    <string name="borrar">Borrar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>

@@ -35,6 +35,7 @@ public interface ClienteDAO {
 
     // Dentro de ClienteDAO.java
     public static class ClienteConVentas extends Cliente {
+        public com.example.zapateria_app.Models.Cliente cliente;
         private int cantidadVentas;
 
         public int getCantidadVentas() {

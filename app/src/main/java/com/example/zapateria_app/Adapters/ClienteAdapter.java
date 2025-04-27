@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,10 +19,25 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
 
     private List<ClienteDAO.ClienteConVentas> clientes;
     private final Context context;
+    private OnClienteClickListener listener;
+
+    public interface OnClienteClickListener {
+        void onEditarClick(ClienteDAO.ClienteConVentas cliente);
+        void onBorrarClick(ClienteDAO.ClienteConVentas cliente);
+    }
+    public void setOnClienteClickListener(OnClienteClickListener listener) {
+        this.listener = listener;
+    }
 
     public ClienteAdapter(List<ClienteDAO.ClienteConVentas> clientes, Context context) {
         this.clientes = clientes;
         this.context = context;
+        if (context instanceof OnClienteClickListener) {
+            this.listener = (OnClienteClickListener) context;
+        } else {
+            throw new RuntimeException(context.toString() +
+                    " debe implementar OnClienteClickListener");
+        }
     }
 
     @NonNull
@@ -36,11 +52,28 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
     public void onBindViewHolder(@NonNull ClienteViewHolder holder, int position) {
         ClienteDAO.ClienteConVentas cliente = clientes.get(position);
         holder.bind(cliente);
+
+        holder.btnEditar.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onEditarClick(cliente);
+            }
+        });
+
+        holder.btnBorrar.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onBorrarClick(cliente);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return clientes != null ? clientes.size() : 0;
+        return clientes.size();
+    }
+
+    public void setClientes(List<ClienteDAO.ClienteConVentas> nuevosClientes) {
+        this.clientes = nuevosClientes;
+        notifyDataSetChanged();
     }
 
     public void updateData(List<ClienteDAO.ClienteConVentas> nuevosClientes) {
@@ -53,6 +86,8 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
         private final TextView tvTelefono;
         private final TextView tvCorreo;
         private final TextView tvVentas;
+        private final ImageButton btnEditar;
+        private final ImageButton btnBorrar;
 
         public ClienteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +95,8 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
             tvTelefono = itemView.findViewById(R.id.tvClienteTelefono);
             tvCorreo = itemView.findViewById(R.id.tvClienteCorreo);
             tvVentas = itemView.findViewById(R.id.tvClienteVentas);
+            btnEditar = itemView.findViewById(R.id.btnEditar);
+            btnBorrar = itemView.findViewById(R.id.btnBorrar);
         }
 
         public void bind(ClienteDAO.ClienteConVentas cliente) {

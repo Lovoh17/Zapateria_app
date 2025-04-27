@@ -6,6 +6,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import com.example.zapateria_app.Models.Venta;
+import com.example.zapateria_app.Models.Producto;
 
 @Entity(tableName = "detalle_ventas",
         foreignKeys = {

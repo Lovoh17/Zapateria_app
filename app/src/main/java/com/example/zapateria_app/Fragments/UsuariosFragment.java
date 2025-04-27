@@ -58,6 +58,7 @@ public class UsuariosFragment extends Fragment {
         Button btnEmpleados = view.findViewById(R.id.VerEmpleados);
         Button btnClientes = view.findViewById(R.id.VerClientes);
 
+
         btnEmpleados.setOnClickListener(v -> replaceFragment(new EmpleadosFragment()));
         btnClientes.setOnClickListener(v -> replaceFragment(new ClientesFragment()));
     }
