@@ -1,4 +1,4 @@
-package com.example.zapateria_app;
+package com.example.zapateria_app.Fragments;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.zapateria_app.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link VentasFragment#newInstance} factory method to
+ * Use the {@link ComprasFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VentasFragment extends Fragment {
+public class ComprasFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class VentasFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public VentasFragment() {
+    public ComprasFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +36,11 @@ public class VentasFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment VentasFragment.
+     * @return A new instance of fragment ComprasFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static VentasFragment newInstance(String param1, String param2) {
-        VentasFragment fragment = new VentasFragment();
+    public static ComprasFragment newInstance(String param1, String param2) {
+        ComprasFragment fragment = new ComprasFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +61,6 @@ public class VentasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ventas, container, false);
+        return inflater.inflate(R.layout.fragment_compras, container, false);
     }
 }

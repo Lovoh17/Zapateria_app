@@ -32,4 +32,21 @@ public interface ClienteDAO {
 
     @Query("SELECT COUNT(*) FROM ventas WHERE id_cliente = :clienteId")
     int countVentasByCliente(int clienteId);
+
+    // Dentro de ClienteDAO.java
+    public static class ClienteConVentas extends Cliente {
+        private int cantidadVentas;
+
+        public int getCantidadVentas() {
+            return cantidadVentas;
+        }
+
+        public void setCantidadVentas(int cantidadVentas) {
+            this.cantidadVentas = cantidadVentas;
+        }
+    }
+
+    // Añade esta consulta al DAO
+    @Query("SELECT clientes.*, COUNT(ventas.id) as cantidadVentas FROM clientes LEFT JOIN ventas ON clientes.id = ventas.id_cliente GROUP BY clientes.id")
+    List<ClienteConVentas> getClientesConVentas();
 }

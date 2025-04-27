@@ -96,49 +96,133 @@ public abstract class databaseZapateria extends RoomDatabase {
 
     private static void insertInitialData(SupportSQLiteDatabase db) {
         try {
-            // 1. Insertar categorías
+            // 1. Insertar categorías (ampliado)
             db.execSQL("INSERT INTO categorias (nombre) VALUES ('Zapatos deportivos')");
             db.execSQL("INSERT INTO categorias (nombre) VALUES ('Zapatos formales')");
             db.execSQL("INSERT INTO categorias (nombre) VALUES ('Sandalias')");
+            db.execSQL("INSERT INTO categorias (nombre) VALUES ('Botas')");
+            db.execSQL("INSERT INTO categorias (nombre) VALUES ('Zapatillas casual')");
+            db.execSQL("INSERT INTO categorias (nombre) VALUES ('Calzado infantil')");
 
-            // 2. Insertar productos
+            // 2. Insertar productos (ampliado)
+            // Zapatos deportivos (categoría 1)
             db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
                     "VALUES ('Runner 2000', 'Nike', 42, 89.99, 1)");
             db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
-                    "VALUES ('Executive', 'Ecco', 40, 129.99, 2)");
+                    "VALUES ('Air Max', 'Nike', 40, 119.99, 1)");
+            db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
+                    "VALUES ('Ultraboost', 'Adidas', 39, 129.99, 1)");
 
-            // 3. Insertar clientes
+            // Zapatos formales (categoría 2)
+            db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
+                    "VALUES ('Executive', 'Ecco', 40, 129.99, 2)");
+            db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
+                    "VALUES ('Classic Oxford', 'Rockport', 41, 149.99, 2)");
+
+            // Sandalias (categoría 3)
+            db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
+                    "VALUES ('Summer Comfort', 'Birkenstock', 38, 79.99, 3)");
+
+            // Botas (categoría 4)
+            db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
+                    "VALUES ('Winter Trekker', 'Timberland', 43, 179.99, 4)");
+
+            // 3. Insertar clientes (ampliado)
             db.execSQL("INSERT INTO clientes (nombre, telefono, correo) " +
                     "VALUES ('Juan Pérez', '5551234567', 'juan@example.com')");
+            db.execSQL("INSERT INTO clientes (nombre, telefono, correo) " +
+                    "VALUES ('María López', '5552345678', 'maria@example.com')");
+            db.execSQL("INSERT INTO clientes (nombre, telefono, correo) " +
+                    "VALUES ('Carlos Gómez', '5553456789', 'carlos@example.com')");
+            db.execSQL("INSERT INTO clientes (nombre, telefono, correo) " +
+                    "VALUES ('Ana Rodríguez', '5554567890', 'ana@example.com')");
 
-            // 4. Insertar empleados
+            // 4. Insertar empleados (ampliado)
             db.execSQL("INSERT INTO empleados (nombre, puesto) " +
                     "VALUES ('María García', 'Vendedor')");
+            db.execSQL("INSERT INTO empleados (nombre, puesto) " +
+                    "VALUES ('Pedro Martínez', 'Gerente')");
+            db.execSQL("INSERT INTO empleados (nombre, puesto) " +
+                    "VALUES ('Luisa Fernández', 'Almacenista')");
 
-            // 5. Insertar venta
+            // 5. Insertar ventas (ampliado)
+            // Venta 1
             db.execSQL("INSERT INTO ventas (id_cliente, id_empleado, fecha, total) " +
-                    "VALUES (1, 1, strftime('%Y-%m-%d %H:%M:%S', 'now'), 219.98)");
+                    "VALUES (1, 1, strftime('%Y-%m-%d %H:%M:%S', 'now', '-2 days'), 219.98)");
+            // Venta 2
+            db.execSQL("INSERT INTO ventas (id_cliente, id_empleado, fecha, total) " +
+                    "VALUES (2, 2, strftime('%Y-%m-%d %H:%M:%S', 'now', '-1 days'), 209.98)");
+            // Venta 3
+            db.execSQL("INSERT INTO ventas (id_cliente, id_empleado, fecha, total) " +
+                    "VALUES (3, 1, strftime('%Y-%m-%d %H:%M:%S', 'now'), 129.99)");
 
-            // 6. Insertar detalle de venta
+            // 6. Insertar detalles de venta (ampliado)
+            // Detalles Venta 1
             db.execSQL("INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, subtotal) " +
                     "VALUES (1, 1, 1, 89.99, 89.99)");
             db.execSQL("INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, subtotal) " +
                     "VALUES (1, 2, 1, 129.99, 129.99)");
 
-            // 7. Insertar movimientos de inventario
-            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
-                    "VALUES (1, 'ENTRADA', 10, 45.00, strftime('%Y-%m-%d %H:%M:%S', 'now'))");
+            // Detalles Venta 2
+            db.execSQL("INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, subtotal) " +
+                    "VALUES (2, 3, 1, 129.99, 129.99)");
+            db.execSQL("INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, subtotal) " +
+                    "VALUES (2, 5, 1, 79.99, 79.99)");
 
-            // 8. Actualizar inventario actual
+            // Detalles Venta 3
+            db.execSQL("INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, subtotal) " +
+                    "VALUES (3, 4, 1, 129.99, 129.99)");
+
+            // 7. Insertar movimientos de inventario (ampliado)
+            // Entradas de inventario
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (1, 'ENTRADA', 15, 45.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-10 days'))");
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (2, 'ENTRADA', 10, 60.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-8 days'))");
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (3, 'ENTRADA', 8, 65.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-6 days'))");
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (4, 'ENTRADA', 12, 70.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-5 days'))");
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (5, 'ENTRADA', 20, 35.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-4 days'))");
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (6, 'ENTRADA', 15, 40.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-3 days'))");
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (7, 'ENTRADA', 10, 90.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-2 days'))");
+
+            // Salidas de inventario (ventas)
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (1, 'SALIDA', 1, 45.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-2 days'))");
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (2, 'SALIDA', 1, 60.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-2 days'))");
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (3, 'SALIDA', 1, 65.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-1 days'))");
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (5, 'SALIDA', 1, 35.00, strftime('%Y-%m-%d %H:%M:%S', 'now', '-1 days'))");
+            db.execSQL("INSERT INTO movimientos_inventario (id_producto, tipo, cantidad, costo_unitario, fecha) " +
+                    "VALUES (4, 'SALIDA', 1, 70.00, strftime('%Y-%m-%d %H:%M:%S', 'now'))");
+
+            // 8. Actualizar inventario actual (ampliado)
             db.execSQL("INSERT INTO inventario_actual (id_producto, stock, costo_promedio) " +
-                    "VALUES (1, 10, 45.00)");
+                    "VALUES (1, 14, 45.00)");
+            db.execSQL("INSERT INTO inventario_actual (id_producto, stock, costo_promedio) " +
+                    "VALUES (2, 9, 60.00)");
+            db.execSQL("INSERT INTO inventario_actual (id_producto, stock, costo_promedio) " +
+                    "VALUES (3, 7, 65.00)");
+            db.execSQL("INSERT INTO inventario_actual (id_producto, stock, costo_promedio) " +
+                    "VALUES (4, 11, 70.00)");
+            db.execSQL("INSERT INTO inventario_actual (id_producto, stock, costo_promedio) " +
+                    "VALUES (5, 19, 35.00)");
+            db.execSQL("INSERT INTO inventario_actual (id_producto, stock, costo_promedio) " +
+                    "VALUES (6, 15, 40.00)");
+            db.execSQL("INSERT INTO inventario_actual (id_producto, stock, costo_promedio) " +
+                    "VALUES (7, 10, 90.00)");
 
             Log.d(TAG, "-> Datos iniciales insertados correctamente");
         } catch (Exception e) {
             Log.e(TAG, "-> Error al insertar datos iniciales", e);
         }
     }
-
     private static void logDatabaseInfo(SupportSQLiteDatabase db) {
         try {
             // Información básica de la base de datos

@@ -9,6 +9,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.zapateria_app.Fragments.ClientesFragment;
+import com.example.zapateria_app.Fragments.ComprasFragment;
+import com.example.zapateria_app.Fragments.ProductoFragment;
+import com.example.zapateria_app.Fragments.VentasFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class inicio extends AppCompatActivity {
@@ -36,14 +40,19 @@ public class inicio extends AppCompatActivity {
 
 //navegación
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment = null;
+
+      Fragment selectedFragment = null;
 
             int itemId = item.getItemId();
-            if (itemId == R.id.inventario) {
-                selectedFragment = new InventarioFragment();
-            } else if (itemId == R.id.compras) {
+            if (itemId == R.id.productos) {
+                selectedFragment = new ProductoFragment();
+            } else if (itemId == R.id.inventario) {
                 selectedFragment = new ComprasFragment();
             } else if (itemId == R.id.ventas) {
+                selectedFragment = new VentasFragment();
+            }else if (itemId == R.id.movimientoInventario) {
+                selectedFragment = new ClientesFragment();
+            }else if (itemId == R.id.usuarios) {
                 selectedFragment = new VentasFragment();
             }
 
@@ -57,9 +66,9 @@ public class inicio extends AppCompatActivity {
             return false;
         });
 
-        // Establecer fragmento inicial
+// Establecer fragmento inicial
         if (savedInstanceState == null) {
-            bottomNavigationView.setSelectedItemId(R.id.inventario);
+            bottomNavigationView.setSelectedItemId(R.id.productos); // Cambiado a productos como vista inicial
         }
 
     }

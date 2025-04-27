@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/productos"
+        android:title="productos"
+        app:showAsAction="always"
+        android:iconTint="@color/white"
+        />
+
+    <item
         android:id="@+id/inventario"
         android:icon="@drawable/ic_inventario"
         android:title="Inventario"
@@ -11,23 +18,23 @@
         />
 
     <item
-        android:id="@+id/compras"
-        android:icon="@drawable/ic_compras"
-        android:title="Compras"
-        app:showAsAction="always"
-        android:iconTint="@color/white"
-        />
-    <item
-        android:id="@+id/carrito"
-        android:icon="@drawable/ic_cart"
-        android:title="Compras"
-        app:showAsAction="always"
-        android:iconTint="@color/white"
-        />
-    <item
         android:id="@+id/ventas"
         android:icon="@drawable/ic_ventas"
         android:title="Ventas"
+        app:showAsAction="always"
+        android:iconTint="@color/white"
+        />
+
+    <item
+        android:id="@+id/movimientoInventario"
+        android:title="Movimientos Inventario"
+        app:showAsAction="always"
+        android:iconTint="@color/white"
+        />
+
+    <item
+        android:id="@+id/usuarios"
+        android:title="usuarios"
         app:showAsAction="always"
         android:iconTint="@color/white"
         />

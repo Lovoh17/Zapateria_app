@@ -1,4 +1,4 @@
-package com.example.zapateria_app;
+package com.example.zapateria_app.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,16 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zapateria_app.Adapters.ProductoAdapter;
-import com.example.zapateria_app.Models.Producto;
 import com.example.zapateria_app.DAO.ProductoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import com.example.zapateria_app.R;
 import com.example.zapateria_app.database.databaseZapateria;
 
-public class InventarioFragment extends Fragment {
+public class ProductoFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -34,7 +35,7 @@ public class InventarioFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflar el layout
-        View view = inflater.inflate(R.layout.fragment_inventario, container, false);
+        View view = inflater.inflate(R.layout.fragment_producto, container, false);
 
         // Inicializar vistas
         recyclerView = view.findViewById(R.id.rvProductos);
@@ -57,7 +58,7 @@ public class InventarioFragment extends Fragment {
         executor.execute(() -> {
             try {
                 // Obtener instancia de la base de datos
-                databaseZapateria db =databaseZapateria.getInstance(getContext());
+                    databaseZapateria db =databaseZapateria.getInstance(getContext());
                 ProductoDAO productoDAO = db.productoDAO();
 
                 // Obtener productos de la base de datos
