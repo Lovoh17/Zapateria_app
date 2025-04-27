@@ -13,6 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.zapateria_app.DAO.CategoriaDAO;
 import com.example.zapateria_app.DAO.ClienteDAO;
+import com.example.zapateria_app.DAO.ComprasDAO;
 import com.example.zapateria_app.DAO.DetalleVentaDAO;
 import com.example.zapateria_app.DAO.EmpleadoDAO;
 import com.example.zapateria_app.DAO.InventarioActualDAO;
@@ -49,6 +50,7 @@ public abstract class databaseZapateria extends RoomDatabase {
     public abstract CategoriaDAO categoriaDAO();
     public abstract ProductoDAO productoDAO();
     public abstract ClienteDAO clienteDAO();
+    public abstract ComprasDAO ComprasDAO();
     public abstract EmpleadoDAO empleadoDAO();
     public abstract VentaDAO ventaDAO();
     public abstract DetalleVentaDAO detalleVentaDAO();
@@ -96,38 +98,27 @@ public abstract class databaseZapateria extends RoomDatabase {
 
     private static void insertInitialData(SupportSQLiteDatabase db) {
         try {
-            // 1. Insertar categorías (ampliado)
+            // 1. Insertar categorías
             db.execSQL("INSERT INTO categorias (nombre) VALUES ('Zapatos deportivos')");
             db.execSQL("INSERT INTO categorias (nombre) VALUES ('Zapatos formales')");
             db.execSQL("INSERT INTO categorias (nombre) VALUES ('Sandalias')");
             db.execSQL("INSERT INTO categorias (nombre) VALUES ('Botas')");
-            db.execSQL("INSERT INTO categorias (nombre) VALUES ('Zapatillas casual')");
-            db.execSQL("INSERT INTO categorias (nombre) VALUES ('Calzado infantil')");
 
-            // 2. Insertar productos (ampliado)
-            // Zapatos deportivos (categoría 1)
+            // 2. Insertar productos
             db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
                     "VALUES ('Runner 2000', 'Nike', 42, 89.99, 1)");
             db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
                     "VALUES ('Air Max', 'Nike', 40, 119.99, 1)");
             db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
                     "VALUES ('Ultraboost', 'Adidas', 39, 129.99, 1)");
-
-            // Zapatos formales (categoría 2)
             db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
                     "VALUES ('Executive', 'Ecco', 40, 129.99, 2)");
             db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
-                    "VALUES ('Classic Oxford', 'Rockport', 41, 149.99, 2)");
-
-            // Sandalias (categoría 3)
-            db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
                     "VALUES ('Summer Comfort', 'Birkenstock', 38, 79.99, 3)");
-
-            // Botas (categoría 4)
             db.execSQL("INSERT INTO productos (nombre, marca, talla, precio, id_categoria) " +
                     "VALUES ('Winter Trekker', 'Timberland', 43, 179.99, 4)");
 
-            // 3. Insertar clientes (ampliado)
+            // 3. Insertar clientes
             db.execSQL("INSERT INTO clientes (nombre, telefono, correo) " +
                     "VALUES ('Juan Pérez', '5551234567', 'juan@example.com')");
             db.execSQL("INSERT INTO clientes (nombre, telefono, correo) " +
@@ -137,13 +128,24 @@ public abstract class databaseZapateria extends RoomDatabase {
             db.execSQL("INSERT INTO clientes (nombre, telefono, correo) " +
                     "VALUES ('Ana Rodríguez', '5554567890', 'ana@example.com')");
 
-            // 4. Insertar empleados (ampliado)
+            // 4. Insertar empleados
             db.execSQL("INSERT INTO empleados (nombre, puesto) " +
                     "VALUES ('María García', 'Vendedor')");
             db.execSQL("INSERT INTO empleados (nombre, puesto) " +
                     "VALUES ('Pedro Martínez', 'Gerente')");
-            db.execSQL("INSERT INTO empleados (nombre, puesto) " +
-                    "VALUES ('Luisa Fernández', 'Almacenista')");
+
+            // 5. Insertar compras (usando tabla compras)
+            db.execSQL("INSERT INTO compras (clienteId, empleadoId, productoId, fechaCompra, total, metodoPago, estado, productos, cantidades) " +
+                    "VALUES (1, 1, 1, strftime('%Y-%m-%d %H:%M:%S', 'now', '-2 days'), 219.98, 'Tarjeta', 'Completada', '[1,2]', '[1,1]')");
+
+            db.execSQL("INSERT INTO compras (clienteId, empleadoId, productoId, fechaCompra, total, metodoPago, estado, productos, cantidades) " +
+                    "VALUES (2, 2, 3, strftime('%Y-%m-%d %H:%M:%S', 'now', '-1 days'), 209.98, 'Efectivo', 'Completada', '[3,5]', '[1,1]')");
+
+            db.execSQL("INSERT INTO compras (clienteId, empleadoId, productoId, fechaCompra, total, metodoPago, estado, productos, cantidades) " +
+                    "VALUES (3, 1, 4, strftime('%Y-%m-%d %H:%M:%S', 'now'), 129.99, 'Transferencia', 'Pendiente', '[4]', '[1]')");
+
+            db.execSQL("INSERT INTO compras (clienteId, productoId, fechaCompra, total, metodoPago, estado, productos, cantidades) " +
+                    "VALUES (4, 6, strftime('%Y-%m-%d %H:%M:%S', 'now', '-3 hours'), 179.99, 'Tarjeta', 'Procesando', '[6]', '[1]')");
 
             // 5. Insertar ventas (ampliado)
             // Venta 1
