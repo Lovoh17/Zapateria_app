@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.zapateria_app.Fragments.ClientesFragment;
 import com.example.zapateria_app.Fragments.ComprasFragment;
+import com.example.zapateria_app.Fragments.DetalleVentaFragment;
 import com.example.zapateria_app.Fragments.ProductoFragment;
 import com.example.zapateria_app.Fragments.UsuariosFragment;
 import com.example.zapateria_app.Fragments.VentasFragment;
@@ -50,7 +51,7 @@ public class inicio extends AppCompatActivity {
             } else if (itemId == R.id.inventario) {
                 selectedFragment = new ComprasFragment();
             } else if (itemId == R.id.ventas) {
-                selectedFragment = new VentasFragment();
+                selectedFragment = new DetalleVentaFragment();
             }else if (itemId == R.id.movimientoInventario) {
                 selectedFragment = new ClientesFragment();
             }else if (itemId == R.id.usuarios) {
