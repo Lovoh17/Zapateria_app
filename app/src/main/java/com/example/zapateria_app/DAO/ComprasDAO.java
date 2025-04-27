@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.zapateria_app.models.Compra;
+import com.example.zapateria_app.Models.Compra;
 
 import java.util.List;
 
