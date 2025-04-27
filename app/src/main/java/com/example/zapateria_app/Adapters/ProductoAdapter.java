@@ -4,25 +4,58 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zapateria_app.DAO.ProductoDAO;
 import com.example.zapateria_app.R;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewHolder> {
 
     private final List<ProductoDAO.ProductoConStock> productos;
     private final Context context;
+    private OnCantidadChangeListener cantidadChangeListener;
+    private final Map<Integer, Integer> cantidadesSeleccionadas = new HashMap<>();
+
+    public interface OnCantidadChangeListener {
+        void onCantidadChanged(int totalItems, double totalValue);
+    }
+
+    public int getCantidadAt(int position) {
+        return getCantidadSegura(position);
+    }
+
+    public void resetCantidades() {
+        for (int i = 0; i < productos.size(); i++) {
+            cantidadesSeleccionadas.put(i, 0);
+        }
+        notifyDataSetChanged();
+        actualizarTotales(); // Esto actualizará los totales a cero
+    }
 
     public ProductoAdapter(List<ProductoDAO.ProductoConStock> productos, Context context) {
         this.productos = productos;
-        this.context = context; 
+        this.context = context;
+        inicializarCantidades();
+    }
+
+    private void inicializarCantidades() {
+        cantidadesSeleccionadas.clear();
+        for (int i = 0; i < productos.size(); i++) {
+            cantidadesSeleccionadas.put(i, 0);
+        }
+    }
+
+    public void setOnCantidadChangeListener(OnCantidadChangeListener listener) {
+        this.cantidadChangeListener = listener;
     }
 
     @NonNull
@@ -37,6 +70,50 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     public void onBindViewHolder(@NonNull ProductoViewHolder holder, int position) {
         ProductoDAO.ProductoConStock producto = productos.get(position);
         holder.bind(producto);
+
+        // Obtener cantidad actual con valor por defecto 0
+        int cantidadActual = getCantidadSegura(position);
+        holder.tvCantidad.setText(String.valueOf(cantidadActual));
+
+        holder.btnAddItem.setOnClickListener(v -> {
+            int nuevaCantidad = getCantidadSegura(position) + 1;
+            if (nuevaCantidad <= producto.getStock()) {
+                cantidadesSeleccionadas.put(position, nuevaCantidad);
+                holder.tvCantidad.setText(String.valueOf(nuevaCantidad));
+                actualizarTotales();
+            } else {
+                Toast.makeText(context, "Stock insuficiente", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.btnRemoveItem.setOnClickListener(v -> {
+            int nuevaCantidad = getCantidadSegura(position) - 1;
+            if (nuevaCantidad >= 0) {
+                cantidadesSeleccionadas.put(position, nuevaCantidad);
+                holder.tvCantidad.setText(String.valueOf(nuevaCantidad));
+                actualizarTotales();
+            }
+        });
+    }
+
+    private int getCantidadSegura(int position) {
+        Integer cantidad = cantidadesSeleccionadas.get(position);
+        return cantidad != null ? cantidad : 0;
+    }
+
+    private void actualizarTotales() {
+        int totalItems = 0;
+        double totalValue = 0.0;
+
+        for (int i = 0; i < productos.size(); i++) {
+            int cantidad = getCantidadSegura(i);
+            totalItems += cantidad;
+            totalValue += cantidad * productos.get(i).getPrecio();
+        }
+
+        if (cantidadChangeListener != null) {
+            cantidadChangeListener.onCantidadChanged(totalItems, totalValue);
+        }
     }
 
     @Override
@@ -44,13 +121,11 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         return productos.size();
     }
 
-    public class ProductoViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvNombre;
-        private final TextView tvMarca;
-        private final TextView tvTalla;
-        private final TextView tvPrecio;
-        private final TextView tvStock;
-        private final TextView tvProductCategory;
+
+
+    public static class ProductoViewHolder extends RecyclerView.ViewHolder {
+        private final TextView tvNombre, tvMarca, tvTalla, tvPrecio, tvStock, tvProductCategory, tvCantidad;
+        private final ImageButton btnAddItem, btnRemoveItem;
 
         public ProductoViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +135,9 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             tvPrecio = itemView.findViewById(R.id.tvProductPrice);
             tvStock = itemView.findViewById(R.id.tvProductStock);
             tvProductCategory = itemView.findViewById(R.id.tvProductCategory);
+            tvCantidad = itemView.findViewById(R.id.tvCantidad);
+            btnAddItem = itemView.findViewById(R.id.btnAddItem);
+            btnRemoveItem = itemView.findViewById(R.id.btnRemoveItem);
         }
 
         public void bind(ProductoDAO.ProductoConStock producto) {
@@ -67,12 +145,12 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             tvMarca.setText(producto.getMarca());
             tvTalla.setText(String.format("Talla: %d", producto.getTalla()));
             tvPrecio.setText(String.format("$%.2f", producto.getPrecio()));
-            tvProductCategory.setText(producto.getNombreCategoria() + "ds");
-
-            int stock = producto.getStock();
-            String stockText = "Stock: " + (stock > 0 ? stock : 0);
-            tvStock.setText(stockText);
-
+            tvStock.setText(String.format("Stock: %d", producto.getStock()));
+            tvProductCategory.setText(producto.getNombreCategoria());
         }
+    }
+
+    public Map<Integer, Integer> getCantidadesSeleccionadas() {
+        return new HashMap<>(cantidadesSeleccionadas);
     }
 }

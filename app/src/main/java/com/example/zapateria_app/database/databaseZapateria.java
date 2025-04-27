@@ -22,6 +22,7 @@ import com.example.zapateria_app.DAO.ProductoDAO;
 import com.example.zapateria_app.DAO.VentaDAO;
 import com.example.zapateria_app.Models.Categoria;
 import com.example.zapateria_app.Models.Cliente;
+import com.example.zapateria_app.Models.Compra;
 import com.example.zapateria_app.Models.DetalleVenta;
 import com.example.zapateria_app.Models.Empleado;
 import com.example.zapateria_app.Models.InventarioActual;
@@ -39,9 +40,11 @@ import io.reactivex.annotations.NonNull;
         Cliente.class,
         Empleado.class,
         Venta.class,
+        Compra.class,
         DetalleVenta.class,
         MovimientoInventario.class,
-        InventarioActual.class
+        InventarioActual.class,
+
 }, version = 1, exportSchema = false)
 
 public abstract class databaseZapateria extends RoomDatabase {

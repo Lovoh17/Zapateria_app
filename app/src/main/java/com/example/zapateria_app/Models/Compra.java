@@ -1,4 +1,4 @@
-package com.example.zapateria_app.models;
+package com.example.zapateria_app.Models;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -39,7 +39,7 @@ public class Compra implements java.io.Serializable {
     private Integer empleadoId;
     private Integer productoId;
 
-    private Date fechaCompra;
+    private String fechaCompra;
     private double total;
     private String metodoPago;
     private String estado;
@@ -49,7 +49,7 @@ public class Compra implements java.io.Serializable {
     private String cantidades;
 
     public Compra() {
-        this.fechaCompra = new Date();
+        this.fechaCompra = "hoy";
         this.estado = "Pendiente";
     }
 
@@ -86,11 +86,11 @@ public class Compra implements java.io.Serializable {
         this.productoId = productoId;
     }
 
-    public Date getFechaCompra() {
+    public String getFechaCompra() {
         return fechaCompra;
     }
 
-    public void setFechaCompra(Date fechaCompra) {
+    public void setFechaCompra(String fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
 

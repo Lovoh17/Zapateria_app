@@ -9,7 +9,6 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,6 +71,7 @@
                 android:textColor="@color/medium_wood"
                 android:textSize="14sp"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,6 +108,44 @@
                 android:textSize="14sp"/>
         </LinearLayout>
 
+        <!-- Botones de agregar/eliminar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <ImageButton
+                android:id="@+id/btnRemoveItem"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/warning_soft_orange"
+                android:contentDescription="Quitar item"
+                android:src="@android:drawable/ic_notification_clear_all" />
+
+            <ImageButton
+                android:id="@+id/btnAddItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/success_soft_green"
+                android:contentDescription="Agregar item"
+                android:src="@android:drawable/ic_input_add" />
+            <TextView
+                android:id="@+id/tvCantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="0"
+                android:textColor="@color/dark_coffee"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tvLowStockWarning"
             android:layout_width="match_parent"
@@ -121,7 +159,4 @@
             android:textSize="12sp"
             android:visibility="gone"/>
     </LinearLayout>
-
-
-
 </androidx.cardview.widget.CardView>

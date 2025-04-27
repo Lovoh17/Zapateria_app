@@ -26,4 +26,10 @@ public interface InventarioActualDAO {
 
     @Query("SELECT SUM(stock * costo_promedio) FROM inventario_actual")
     double getValorTotalInventario();
+
+    @Query("SELECT * FROM inventario_actual WHERE id_producto = :productoId")
+    InventarioActual getInventarioByProductoId(int productoId);
+
+    @Query("UPDATE inventario_actual SET stock = stock - :cantidad WHERE id_producto = :productoId")
+    int disminuirStock(int productoId, int cantidad);
 }
