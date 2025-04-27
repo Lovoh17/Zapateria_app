@@ -37,6 +37,9 @@ public interface ProductoDAO {
     @Query("SELECT COUNT(*) FROM detalle_ventas WHERE id_producto = :productoId")
     int countVentasByProducto(int productoId);
 
+    // Consulta para aumentar el stock
+    @Query("UPDATE inventario_actual SET stock = stock + :cantidad WHERE id_producto = :productoId")
+    void aumentarStock(int productoId, int cantidad);
 
     @Query("SELECT p.*, i.stock as stock, i.costo_promedio as costoPromedio, c.nombre as nombreCategoria " +
             "FROM productos p " +
