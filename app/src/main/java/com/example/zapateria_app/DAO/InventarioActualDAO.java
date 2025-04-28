@@ -5,7 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.zapateria_app.Models.InventarioActual;
+import com.example.zapateria_app.models.InventarioActual;
 
 @Dao
 public interface InventarioActualDAO {

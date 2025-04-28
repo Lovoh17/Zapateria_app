@@ -110,11 +110,33 @@ public class DialogoCliente extends DialogFragment {
     }
 
     private boolean validateInputs() {
-        if (etNombre.getText().toString().trim().isEmpty()) {
+        String nombre = etNombre.getText().toString().trim();
+        String correo = etCorreo.getText().toString().trim();
+        if (nombre.isEmpty()) {
             etNombre.setError("Nombre requerido");
             return false;
         }
+        if (contieneNumeros(nombre)) {
+            etNombre.setError("El nombre no puede contener números");
+            return false;
+        }
+        if (correo.isEmpty()) {
+            etNombre.setError("Nombre requerido");
+            return false;
+        }
+        if (contieneNumeros(correo)) {
+            etNombre.setError("El nombre no puede contener números");
+            return false;
+        }
         return true;
+    }
+    private boolean contieneNumeros(String texto) {
+        for (char c : texto.toCharArray()) {
+            if (Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Cliente prepareClienteData() {

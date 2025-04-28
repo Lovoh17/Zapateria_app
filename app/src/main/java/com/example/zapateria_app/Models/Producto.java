@@ -104,4 +104,5 @@ public class Producto implements java.io.Serializable {
     public void setIdCategoria(int idCategoria) {
         this.idCategoria = idCategoria;
     }
+
 }

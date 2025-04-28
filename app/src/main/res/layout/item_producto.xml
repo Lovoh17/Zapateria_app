@@ -59,9 +59,9 @@
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="12dp"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="8dp"
-                android:background="@color/border_taupe"/>
+                android:background="@color/border_taupe" />
 
             <TextView
                 android:id="@+id/tvProductCategory"

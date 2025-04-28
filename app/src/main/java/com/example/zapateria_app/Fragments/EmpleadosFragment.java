@@ -44,7 +44,7 @@ public class EmpleadosFragment extends Fragment implements EmpleadoAdapter.OnEmp
         Button btnAgregarEmpleado = view.findViewById(R.id.addEmpleado);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new EmpleadoAdapter(listaEmpleados, requireContext(), this); // Pasar this como listener
+        adapter = new EmpleadoAdapter(listaEmpleados, requireContext(), this);
         recyclerView.setAdapter(adapter);
 
         btnAgregarEmpleado.setOnClickListener(v -> {

@@ -26,8 +26,8 @@ import com.example.zapateria_app.DAO.ProductoDAO;
 import com.example.zapateria_app.DAO.VentaDAO;
 import com.example.zapateria_app.Models.Cliente;
 import com.example.zapateria_app.Models.DetalleVenta;
-import com.example.zapateria_app.Models.InventarioActual;
-import com.example.zapateria_app.Models.Venta;
+import com.example.zapateria_app.models.InventarioActual;
+import com.example.zapateria_app.models.Venta;
 import com.example.zapateria_app.database.databaseZapateria;
 import com.example.zapateria_app.R;
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/dark_caramel"
     android:padding="16dp">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -14,6 +15,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNombreProducto"
+            android:background="@color/primary_light_beige"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre del producto"
@@ -30,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Marca"
+            android:background="@color/primary_light_beige"
             android:inputType="textCapWords"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Talla"
+                android:background="@color/primary_light_beige"
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,6 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Precio"
+                android:background="@color/primary_light_beige"
                 android:inputType="numberDecimal"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -76,6 +81,7 @@
 
         <Spinner
             android:id="@+id/spinnerCategoria"
+            android:background="@color/primary_light_beige"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>

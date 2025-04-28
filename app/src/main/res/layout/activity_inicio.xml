@@ -10,6 +10,21 @@
     tools:context=".MainActivity">
 
     <!-- Logo con margen superior e inferior -->
+
+    <!-- Contenedor principal de fragmentos -->
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="264dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/app_logo" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="264dp"
@@ -18,11 +33,11 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/app_logo" />
 
-    <!-- Contenedor principal de fragmentos -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:layout_width="0dp"
@@ -44,5 +59,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/toolbar"
         tools:ignore="BottomAppBar" />
+
+    <Button
+        android:id="@+id/salir"
+        android:onClick="VolverIncio"
+        android:layout_width="35dp"
+        android:backgroundTint="@color/dark_mocha"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="36dp"
+        android:layout_height="17dp"
+        android:layout_marginEnd="16dp"
+        android:text="Salir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/salir" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

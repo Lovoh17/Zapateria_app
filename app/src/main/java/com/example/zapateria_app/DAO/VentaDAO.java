@@ -7,7 +7,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
-import com.example.zapateria_app.Models.Venta;
+import com.example.zapateria_app.models.Venta;
 import com.example.zapateria_app.POJO.VentaCompletaPOJO;
 
 import java.util.List;

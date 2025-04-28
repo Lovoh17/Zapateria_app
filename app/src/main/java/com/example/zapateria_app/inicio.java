@@ -1,6 +1,8 @@
 package com.example.zapateria_app;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,5 +73,11 @@ public class inicio extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(R.id.productos);
         }
 
+
+
+    }
+    public void VolverIncio(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

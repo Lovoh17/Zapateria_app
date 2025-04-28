@@ -73,6 +73,18 @@ public class DialogoEmpleado extends DialogFragment {
             etNombre.setError("Nombre requerido");
             return;
         }
+        if (contieneNumeros(nombre)) {
+            etNombre.setError("El nombre no puede contener números");
+            return;
+        }
+        if (puesto.isEmpty()) {
+            etPuesto.setError("Puesto requerido");
+            return;
+        }
+        if (contieneNumeros(puesto)) {
+            etPuesto.setError("El puesto no puede contener números");
+            return;
+        }
 
         Empleado nuevoEmpleado;
         if (empleado != null) {
@@ -87,5 +99,13 @@ public class DialogoEmpleado extends DialogFragment {
             listener.onEmpleadoGuardado(nuevoEmpleado);
         }
         dismiss();
+    }
+    private boolean contieneNumeros(String texto) {
+        for (char c : texto.toCharArray()) {
+            if (Character.isDigit(c)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

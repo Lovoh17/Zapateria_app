@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.zapateria_app.Models.MovimientoInventario;
+import com.example.zapateria_app.models.MovimientoInventario;
 import com.example.zapateria_app.POJO.MovimientoConProducto;
 
 import java.util.List;

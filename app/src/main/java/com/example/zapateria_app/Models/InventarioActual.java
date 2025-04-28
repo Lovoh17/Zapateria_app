@@ -1,4 +1,4 @@
-package com.example.zapateria_app.Models;
+package com.example.zapateria_app.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -6,8 +6,9 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+
 @Entity(tableName = "inventario_actual",
-        foreignKeys = @ForeignKey(entity = Producto.class,
+        foreignKeys = @ForeignKey(entity = com.example.zapateria_app.Models.Producto.class,
                 parentColumns = "id",
                 childColumns = "id_producto",
                 onDelete = ForeignKey.CASCADE))

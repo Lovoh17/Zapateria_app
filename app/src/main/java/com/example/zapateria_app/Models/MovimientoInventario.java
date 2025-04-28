@@ -1,4 +1,4 @@
-package com.example.zapateria_app.Models;
+package com.example.zapateria_app.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName = "movimientos_inventario",
-        foreignKeys = @ForeignKey(entity = Producto.class,
+        foreignKeys = @ForeignKey(entity = com.example.zapateria_app.Models.Producto.class,
                 parentColumns = "id",
                 childColumns = "id_producto",
                 onDelete = ForeignKey.RESTRICT),

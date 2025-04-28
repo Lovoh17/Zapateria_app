@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/dark_caramel"
     android:padding="16dp">
 
     <TextView
         android:layout_width="match_parent"
+        android:textColor="@color/primary_light_beige"
         android:layout_height="wrap_content"
         android:text="Confirmar Compra"
         android:textSize="20sp"
@@ -19,17 +21,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Seleccionar Cliente"
+        android:background="@color/primary_light_beige"
         android:layout_marginBottom="4dp"/>
 
     <Spinner
         android:id="@+id/spinnerClientes"
         android:layout_width="match_parent"
+        android:background="@color/primary_light_beige"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primary_light_beige"
         android:text="Productos Seleccionados"
         android:layout_marginBottom="4dp"/>
 

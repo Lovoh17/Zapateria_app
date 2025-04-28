@@ -25,10 +25,10 @@ import com.example.zapateria_app.Models.Cliente;
 import com.example.zapateria_app.Models.Compra;
 import com.example.zapateria_app.Models.DetalleVenta;
 import com.example.zapateria_app.Models.Empleado;
-import com.example.zapateria_app.Models.InventarioActual;
-import com.example.zapateria_app.Models.MovimientoInventario;
+import com.example.zapateria_app.models.InventarioActual;
+import com.example.zapateria_app.models.MovimientoInventario;
 import com.example.zapateria_app.Models.Producto;
-import com.example.zapateria_app.Models.Venta;
+import com.example.zapateria_app.models.Venta;
 
 import java.io.File;
 

@@ -17,26 +17,27 @@
             android:id="@+id/tvTituloClientes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="28dp"
             android:text="Listado de Clientes"
             android:textColor="@color/primary_light_beige"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.175"
+            app:layout_constraintHorizontal_bias="0.234"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tvTituloClientes2"
             android:layout_width="56dp"
             android:layout_height="23dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="36dp"
             android:text="Nuevo"
             android:textColor="@color/dark_mocha"
             android:textSize="15dp"
-            android:textStyle="bold"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.918"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,10 +68,9 @@
             android:id="@+id/addCliente"
             android:layout_width="21dp"
             android:layout_height="22dp"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="60dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/ic_add_sale"
-            android:backgroundTint="@color/dark_caramel"
+            android:layout_marginEnd="92dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
