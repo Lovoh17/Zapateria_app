@@ -38,7 +38,6 @@ public class MovimientoAdapter extends RecyclerView.Adapter<MovimientoAdapter.Mo
     public void onBindViewHolder(@NonNull MovimientoViewHolder holder, int position) {
         MovimientoConProducto movimiento = movimientos.get(position);
 
-        // Configurar tipo de movimiento con color según sea compra o venta
         if (movimiento.getTipo().equalsIgnoreCase("ENTRADA")) {
             holder.tvTipoMovimiento.setTextColor(ContextCompat.getColor(context, R.color.success_soft_green));
         } else {

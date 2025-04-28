@@ -31,7 +31,6 @@ public class DetalleVentaFragment extends Fragment {
     private Executor executor = Executors.newSingleThreadExecutor();
 
     public DetalleVentaFragment() {
-        // Required empty public constructor
     }
 
     public static DetalleVentaFragment newInstance() {

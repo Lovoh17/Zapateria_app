@@ -34,6 +34,9 @@ public interface ProductoDAO {
     @Query("SELECT COUNT(*) FROM productos")
     int countProductos();
 
+    @Query("UPDATE productos SET precio = :nuevoPrecio WHERE id = :productoId")
+    void actualizarPrecioProducto(int productoId, double nuevoPrecio);
+
     @Query("SELECT COUNT(*) FROM detalle_ventas WHERE id_producto = :productoId")
     int countVentasByProducto(int productoId);
 

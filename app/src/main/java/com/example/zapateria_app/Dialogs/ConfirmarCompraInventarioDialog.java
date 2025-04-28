@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,10 +16,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.zapateria_app.DAO.ProductoDAO;
+import com.example.zapateria_app.Models.InventarioActual;
+import com.example.zapateria_app.Models.MovimientoInventario;
 import com.example.zapateria_app.R;
+import com.example.zapateria_app.database.databaseZapateria;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -80,11 +86,8 @@ public class ConfirmarCompraInventarioDialog extends DialogFragment {
                     .create();
         }
 
-        // Formatear el total
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
-       // tvTotal.setText(getString(R.string.total_compra, currencyFormat.format(total)));
 
-        // Construir detalles de la compra
         StringBuilder detalles = new StringBuilder();
         for (int i = 0; i < productos.size(); i++) {
             ProductoDAO.ProductoConStock producto = productos.get(i);
@@ -116,26 +119,76 @@ public class ConfirmarCompraInventarioDialog extends DialogFragment {
     private void confirmarCompra() {
         if (listener != null) {
             try {
-                // Mostrar progreso mientras se procesa
                 AlertDialog dialog = (AlertDialog) getDialog();
                 if (dialog != null) {
                     dialog.findViewById(R.id.btnConfirmarCompraInventario).setEnabled(false);
                     dialog.findViewById(R.id.btnCancelarCompraInventario).setEnabled(false);
                 }
 
-                // Simular operación de guardado (reemplazar con lógica real)
+                // Obtener fecha actual
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+                String fechaActual = dateFormat.format(new Date());
+
                 new Thread(() -> {
+                    databaseZapateria db = databaseZapateria.getInstance(getContext());
+
                     try {
-                        Thread.sleep(1500); // Simular tiempo de procesamiento
-                        requireActivity().runOnUiThread(() -> {
-                            long idVenta = System.currentTimeMillis(); // ID temporal
-                            listener.onCompraConfirmada(idVenta);
-                            dismiss();
+                        db.runInTransaction(() -> {
+                            // Registrar cada producto comprado
+                            for (int i = 0; i < productos.size(); i++) {
+                                ProductoDAO.ProductoConStock producto = productos.get(i);
+                                int cantidad = cantidades.get(i);
+
+                                if (cantidad <= 0) continue;
+
+                                // 1. Actualizar inventario actual
+                                InventarioActual inventario = db.inventarioActualDAO().getInventarioByProductoId(producto.getId());
+                                if (inventario == null) {
+                                    // Crear nuevo registro de inventario
+                                    inventario = new InventarioActual();
+                                    inventario.setIdProducto(producto.getId());
+                                    inventario.setStock(cantidad);
+                                    inventario.setCostoPromedio(producto.getPrecio());
+                                    db.inventarioActualDAO().insertInventario(inventario);
+                                } else {
+                                    // Actualizar stock existente
+                                    db.inventarioActualDAO().actualizarStock(
+                                            producto.getId(),
+                                            cantidad
+                                    );
+                                }
+
+                                // 2. Registrar movimiento de inventario (ENTRADA)
+                                MovimientoInventario movimiento = new MovimientoInventario(
+                                        producto.getId(),
+                                        "ENTRADA",
+                                        cantidad,
+                                        producto.getPrecio(),
+                                        fechaActual
+                                );
+                                db.movimientoInventarioDAO().insertMovimiento(movimiento);
+
+                                Toast.makeText(getContext(), " compra: ", Toast.LENGTH_LONG).show();
+
+                                Log.d("ConfirmarCompra", "Movimiento de inventario registrado para producto ID: " + producto.getId());
+
+                            }
+
+                            // Notificar éxito
+                            requireActivity().runOnUiThread(() -> {
+                                long idCompra = System.currentTimeMillis();
+                                listener.onCompraConfirmada(idCompra);
+                                dismiss();
+                                Toast.makeText(getContext(), "Compra registrada exitosamente", Toast.LENGTH_SHORT).show();
+                            });
                         });
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         requireActivity().runOnUiThread(() -> {
-                            Toast.makeText(getContext(), "Error al procesar compra", Toast.LENGTH_SHORT).show();
-                            dismiss();
+                            Toast.makeText(getContext(), "Error al registrar compra: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            if (dialog != null) {
+                                dialog.findViewById(R.id.btnConfirmarCompraInventario).setEnabled(true);
+                                dialog.findViewById(R.id.btnCancelarCompraInventario).setEnabled(true);
+                            }
                         });
                     }
                 }).start();

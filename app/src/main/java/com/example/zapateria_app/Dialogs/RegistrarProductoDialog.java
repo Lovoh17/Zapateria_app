@@ -18,17 +18,22 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.zapateria_app.DAO.CategoriaDAO;
 import com.example.zapateria_app.DAO.ProductoDAO;
+import com.example.zapateria_app.Models.InventarioActual;
+import com.example.zapateria_app.Models.MovimientoInventario;
 import com.example.zapateria_app.Models.Producto;
 import com.example.zapateria_app.R;
 import com.example.zapateria_app.database.databaseZapateria;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class RegistrarProductoDialog extends DialogFragment {
 
-    private EditText etNombre, etMarca, etTalla, etPrecio;
+    private EditText etNombre, etMarca, etTalla, etPrecio, etCantidad, etCosto;
     private Spinner spinnerCategoria;
     private ProductoRegistradoListener listener;
     private Executor executor = Executors.newSingleThreadExecutor();
@@ -57,6 +62,8 @@ public class RegistrarProductoDialog extends DialogFragment {
         etMarca = view.findViewById(R.id.etMarcaProducto);
         etTalla = view.findViewById(R.id.etTallaProducto);
         etPrecio = view.findViewById(R.id.etPrecioProducto);
+        etCantidad = view.findViewById(R.id.etCantidadProducto);
+        etCosto = view.findViewById(R.id.etCostoProducto);
         spinnerCategoria = view.findViewById(R.id.spinnerCategoria);
         Button btnGuardar = view.findViewById(R.id.btnGuardarProducto);
         Button btnCancelar = view.findViewById(R.id.btnCancelarRegistroProducto);
@@ -103,9 +110,12 @@ public class RegistrarProductoDialog extends DialogFragment {
         String marca = etMarca.getText().toString().trim();
         String tallaStr = etTalla.getText().toString().trim();
         String precioStr = etPrecio.getText().toString().trim();
+        String cantidadStr = etCantidad.getText().toString().trim();
+        String costoStr = etCosto.getText().toString().trim();
         String categoria = spinnerCategoria.getSelectedItem().toString();
 
-        if (nombre.isEmpty() || marca.isEmpty() || tallaStr.isEmpty() || precioStr.isEmpty()) {
+        if (nombre.isEmpty() || marca.isEmpty() || tallaStr.isEmpty() ||
+                precioStr.isEmpty() || cantidadStr.isEmpty() || costoStr.isEmpty()) {
             Toast.makeText(getContext(), "Complete todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -113,38 +123,67 @@ public class RegistrarProductoDialog extends DialogFragment {
         try {
             int talla = Integer.parseInt(tallaStr);
             double precio = Double.parseDouble(precioStr);
+            int cantidadInicial = Integer.parseInt(cantidadStr);
+            double costoUnitario = Double.parseDouble(costoStr);
 
-            if (talla <= 0 || precio <= 0) {
-                Toast.makeText(getContext(), "Valores deben ser mayores a cero", Toast.LENGTH_SHORT).show();
+            if (talla <= 0 || precio <= 0 || cantidadInicial <= 0 || costoUnitario <= 0) {
+                Toast.makeText(getContext(), "Todos los valores deben ser mayores a cero", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Obtener ID de categoría
+            // Obtener fecha actual
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+            String fechaActual = dateFormat.format(new Date());
+
+            // Proceso en segundo plano
             executor.execute(() -> {
-                try {
-                    databaseZapateria db = databaseZapateria.getInstance(getContext());
-                    CategoriaDAO categoriaDAO = db.categoriaDAO();
-                    int idCategoria = categoriaDAO.getIdCategoriaPorNombre(categoria);
+                databaseZapateria db = databaseZapateria.getInstance(getContext());
 
-                    Producto producto = new Producto(nombre, marca, talla, precio, idCategoria);
-                    ProductoDAO productoDAO = db.productoDAO();
-                    long id = productoDAO.insertProducto(producto);
+                db.runInTransaction(() -> {
+                    try {
+                        // 1. Obtener ID de categoría
+                        int idCategoria = db.categoriaDAO().getIdCategoriaPorNombre(categoria);
 
-                    requireActivity().runOnUiThread(() -> {
-                        if (id > 0) {
-                            Toast.makeText(getContext(), "Producto registrado", Toast.LENGTH_SHORT).show();
+                        // 2. Registrar el producto (sin cantidad, ya que va en inventario_actual)
+                        Producto producto = new Producto(nombre, marca, talla, precio, idCategoria);
+                        long idProducto = db.productoDAO().insertProducto(producto);
+
+                        if (idProducto == -1) {
+                            throw new Exception("Error al insertar producto");
+                        }
+
+                        // 3. Registrar inventario inicial
+                        InventarioActual inventario = new InventarioActual();
+                        inventario.setIdProducto((int) idProducto);
+                        inventario.setStock(cantidadInicial);
+                        inventario.setCostoPromedio(costoUnitario);
+                        db.inventarioActualDAO().insertInventario(inventario);
+
+                        // 4. Registrar movimiento de inventario (ENTRADA inicial)
+                        MovimientoInventario movimiento = new MovimientoInventario(
+                                (int) idProducto,
+                                "ENTRADA",
+                                cantidadInicial,
+                                costoUnitario,
+                                fechaActual
+                        );
+                        db.movimientoInventarioDAO().insertMovimiento(movimiento);
+
+                        // Notificar éxito en el hilo principal
+                        requireActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "Producto registrado exitosamente", Toast.LENGTH_SHORT).show();
                             if (listener != null) {
                                 listener.onProductoRegistrado();
                             }
                             dismiss();
-                        } else {
-                            Toast.makeText(getContext(), "Error al registrar", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } catch (Exception e) {
-                    requireActivity().runOnUiThread(() ->
-                            Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                }
+                        });
+
+                    } catch (Exception e) {
+                        requireActivity().runOnUiThread(() -> {
+                            Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        });
+                    }
+                });
             });
 
         } catch (NumberFormatException e) {
