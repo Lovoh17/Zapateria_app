@@ -4,26 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/accent_camel"
-    tools:context=".Fragments.ComprasFragment">
+    android:background="@drawable/fragment_border"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <!-- Título de la compra -->
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvTituloCompra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="169dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="185dp"
-            android:text="Compras"
+            android:text="Compra de inventario"
             android:textColor="@color/primary_light_beige"
-            android:textSize="35dp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.411"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Botones superiores mejorados -->
+        <LinearLayout
+            android:id="@+id/buttonsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:padding="4dp"
+            android:background="@drawable/rounded_layout"
+            app:layout_constraintTop_toBottomOf="@+id/tvTituloCompra">
+
+            <!-- Botón Registrar Producto -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRegistrarProducto"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/dark_caramel"
+                android:text="Producto nuevo"
+                android:textColor="@color/light_cream"
+                android:textSize="12sp"
+                app:cornerRadius="8dp"
+                app:strokeColor="@color/dark_coffee"
+                app:strokeWidth="1dp"
+                app:rippleColor="@color/medium_wood" />
+
+            <!-- Botón Realizar Compra -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnComprar"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/dark_coffee"
+                android:text="Realizar Compra"
+                android:textColor="@color/primary_light_beige"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:cornerRadius="8dp"
+                app:rippleColor="@color/medium_wood" />
+        </LinearLayout>
+
+        <!-- RecyclerView para productos -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProductosCompra"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:clipToPadding="false"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonsContainer" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

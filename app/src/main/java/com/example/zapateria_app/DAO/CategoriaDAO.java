@@ -33,4 +33,15 @@ public interface CategoriaDAO {
 
     @Query("SELECT COUNT(*) FROM productos WHERE id_categoria = :categoriaId")
     int countProductosByCategoria(int categoriaId);
+
+    @Query("SELECT nombre FROM categorias ORDER BY nombre ASC")
+    List<String> getAllNombresCategorias();
+
+    // Nueva consulta para obtener el ID de una categoría por su nombre
+    @Query("SELECT id FROM categorias WHERE nombre = :nombre LIMIT 1")
+    int getIdCategoriaPorNombre(String nombre);
+
+    // Nueva consulta para verificar si existe una categoría por nombre
+    @Query("SELECT COUNT(*) FROM categorias WHERE nombre = :nombre")
+    int existeCategoria(String nombre);
 }

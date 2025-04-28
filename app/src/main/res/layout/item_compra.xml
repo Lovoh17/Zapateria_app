@@ -26,7 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="nombre_producto"
+                android:text="Nombre Producto"
                 android:textColor="@color/dark_coffee"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
@@ -36,7 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="precio_pro"
+                android:text="$0.00"
                 android:textAlignment="textEnd"
                 android:textColor="@color/medium_wood"
                 android:textSize="16sp"
@@ -53,7 +53,7 @@
                 android:id="@+id/tvProductBrand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="marca_producto"
+                android:text="Marca"
                 android:textColor="@color/medium_wood"
                 android:textSize="14sp"/>
 
@@ -67,7 +67,7 @@
                 android:id="@+id/tvProductCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="categoria_producto"
+                android:text="Categoría"
                 android:textColor="@color/medium_wood"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -84,7 +84,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="talla_producto"
+                android:text="Talla"
                 android:textColor="@color/dark_coffee"
                 android:textSize="14sp"/>
 
@@ -93,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="stock_producto"
+                android:text="Stock: 0"
                 android:textColor="@color/dark_coffee"
                 android:textSize="14sp"/>
 
@@ -102,76 +102,60 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="costo_producto"
+                android:text="Costo: $0.00"
                 android:textAlignment="textEnd"
                 android:textColor="@color/dark_coffee"
                 android:textSize="14sp"/>
         </LinearLayout>
 
-        <!-- Botones de agregar/eliminar -->
+        <!-- Controles para cantidad a comprar -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="3">
 
-            <ImageButton
-                android:id="@+id/btnRemoveItem"
-                android:layout_width="20dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="4dp"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/warning_soft_orange"
-                android:contentDescription="Quitar item"
-                android:src="@android:drawable/ic_delete" />
+                android:text="Cantidad:"
+                android:textColor="@color/dark_coffee"
+                android:textSize="16sp"/>
 
-            <ImageButton
-                android:id="@+id/btnAddItem"
+            <EditText
+                android:id="@+id/etCantidadCompra"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="4dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/success_soft_green"
-                android:contentDescription="Agregar item"
-                android:src="@android:drawable/ic_input_add" />
-
-            <TextView
-                android:id="@+id/Cant"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginHorizontal="8dp"
-                android:gravity="center"
-                android:text="Cant:"
-                android:textColor="@color/dark_coffee"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvCantidad"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginHorizontal="8dp"
+                android:inputType="number"
                 android:text="0"
+                android:textAlignment="center"
                 android:textColor="@color/dark_coffee"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:textStyle="bold"/>
+                android:textSize="16sp"/>
 
+            <Button
+                android:id="@+id/btnAplicarCantidad"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/medium_wood"
+                android:text="Aplicar"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvLowStockWarning"
+            android:id="@+id/tvSubtotal"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:background="@color/warning_soft_orange"
-            android:padding="4dp"
-
-            android:text="STOCK BAJO"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:visibility="gone"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Subtotal: $0.00"
+            android:textAlignment="textEnd"
+            android:textColor="@color/medium_wood"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

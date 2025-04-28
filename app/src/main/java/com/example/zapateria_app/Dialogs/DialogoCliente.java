@@ -1,4 +1,4 @@
-package com.example.zapateria_app.Dialog;
+package com.example.zapateria_app.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

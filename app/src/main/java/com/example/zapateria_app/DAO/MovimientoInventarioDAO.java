@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.zapateria_app.Models.MovimientoInventario;
+import com.example.zapateria_app.POJO.MovimientoConProducto;
 
 import java.util.List;
 
@@ -34,4 +35,12 @@ public interface MovimientoInventarioDAO {
     @Query("SELECT AVG(costo_unitario) FROM movimientos_inventario " +
             "WHERE id_producto = :productoId AND tipo = 'ENTRADA'")
     double getCostoPromedio(int productoId);
+
+    @Query("SELECT m.id, m.tipo, m.cantidad, m.costo_unitario as costoUnitario, " +
+            "m.fecha, p.nombre as nombreProducto, p.marca as marcaProducto " +
+            "FROM movimientos_inventario m " +
+            "INNER JOIN productos p ON m.id_producto = p.id " +
+            "ORDER BY m.fecha DESC")
+    List<MovimientoConProducto> getAllMovimientosConProductos();
+
 }

@@ -9,12 +9,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.zapateria_app.Fragments.ClientesFragment;
-import com.example.zapateria_app.Fragments.ComprasFragment;
+import com.example.zapateria_app.Fragments.CompraInventarioFragment;
 import com.example.zapateria_app.Fragments.DetalleVentaFragment;
+import com.example.zapateria_app.Fragments.MovimientoInventarioFragment;
 import com.example.zapateria_app.Fragments.ProductoFragment;
 import com.example.zapateria_app.Fragments.UsuariosFragment;
-import com.example.zapateria_app.Fragments.VentasFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class inicio extends AppCompatActivity {
@@ -49,11 +48,11 @@ public class inicio extends AppCompatActivity {
             if (itemId == R.id.productos) {
                 selectedFragment = new ProductoFragment();
             } else if (itemId == R.id.inventario) {
-                selectedFragment = new ComprasFragment();
+                selectedFragment = new CompraInventarioFragment();
             } else if (itemId == R.id.ventas) {
                 selectedFragment = new DetalleVentaFragment();
             }else if (itemId == R.id.movimientoInventario) {
-                selectedFragment = new UsuariosFragment();
+                selectedFragment = new MovimientoInventarioFragment();
             }else if (itemId == R.id.usuarios) {
                 selectedFragment = new UsuariosFragment();
             }
@@ -68,7 +67,6 @@ public class inicio extends AppCompatActivity {
             return false;
         });
 
-// Establecer fragmento inicial
         if (savedInstanceState == null) {
             bottomNavigationView.setSelectedItemId(R.id.productos);
         }

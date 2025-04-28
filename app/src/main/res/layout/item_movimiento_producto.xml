@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground">
+
+        <!-- Encabezado con tipo de movimiento y fecha -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tvTipoMovimiento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/dark_caramel"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="COMPRA"/>
+
+            <TextView
+                android:id="@+id/tvFechaMovimiento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textColor="@color/dark_caramel"
+                android:textSize="14sp"
+                tools:text="15/06/2023"/>
+        </LinearLayout>
+
+        <!-- Línea divisoria -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="8dp"
+            android:textColor="@color/dark_caramel"
+            />
+
+        <!-- Información del producto -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tvNombreProducto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:textColor="@color/dark_caramel"
+                android:textSize="16sp"
+                tools:text="Zapato deportivo"/>
+
+            <TextView
+                android:id="@+id/tvMarcaProducto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="end"
+                android:textColor="@color/dark_caramel"
+                android:textSize="14sp"
+                tools:text="Nike"/>
+        </LinearLayout>
+
+        <!-- Detalles de cantidad y costo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tvCantidad"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/dark_caramel"
+                android:textSize="14sp"
+                tools:text="Cantidad: 10"/>
+
+            <TextView
+                android:id="@+id/tvCostoUnitario"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textColor="@color/dark_caramel"
+                android:textSize="14sp"
+                tools:text="Costo: $25.00"/>
+        </LinearLayout>
+
+        <!-- Total del movimiento -->
+        <TextView
+            android:id="@+id/tvTotalMovimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="end"
+            android:textColor="@color/dark_caramel"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Total: $250.00"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
