@@ -4,42 +4,41 @@
 
     <item
         android:id="@+id/productos"
-        android:title="productos"
+        android:title="Productos"
         android:icon="@drawable/ic_products"
         app:showAsAction="always"
-        android:iconTint="@color/white"
-        />
+        android:iconTint="@color/black"
+        android:background="@color/medium_wood"/>
 
     <item
         android:id="@+id/inventario"
         android:icon="@drawable/ic_inventario"
         android:title="Inventario"
         app:showAsAction="always"
-        android:iconTint="@color/white"
-        />
+        android:iconTint="@color/black"
+        android:background="@color/medium_wood"/>
 
     <item
         android:id="@+id/ventas"
         android:icon="@drawable/ic_ventas"
         android:title="Ventas"
         app:showAsAction="always"
-        android:iconTint="@color/white"
-        />
+        android:iconTint="@color/black"
+        android:background="@color/medium_wood"/>
 
     <item
         android:id="@+id/movimientoInventario"
-        android:title="Movimientos Inventario"
+        android:title="Movimientos"
         android:icon="@drawable/ic_move"
         app:showAsAction="always"
-        android:iconTint="@color/white"
-        />
+        android:iconTint="@color/black"
+        android:background="@color/medium_wood"/>
 
     <item
         android:id="@+id/usuarios"
-        android:title="usuarios"
+        android:title="Usuarios"
         android:icon="@drawable/ic_user"
         app:showAsAction="always"
-        android:iconTint="@color/white"
-        />
-
+        android:iconTint="@color/black"
+        android:background="@color/medium_wood"/>
 </menu>

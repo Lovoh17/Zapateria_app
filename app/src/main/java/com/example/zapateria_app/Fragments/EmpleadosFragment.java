@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zapateria_app.Adapters.EmpleadoAdapter;
-import com.example.zapateria_app.Dialog.DialogoEmpleado;
+import com.example.zapateria_app.Dialogs.DialogoEmpleado;
 import com.example.zapateria_app.Models.Empleado;
 import com.example.zapateria_app.R;
 import com.example.zapateria_app.database.databaseZapateria;

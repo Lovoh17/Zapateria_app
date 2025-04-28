@@ -4,73 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/accent_camel"
+    android:background="@drawable/fragment_border"
     tools:context=".Fragments.UsuariosFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Título -->
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Gestion de Usuario"
+            android:layout_marginTop="24dp"
+            android:text="Gestión de Usuarios"
             android:textColor="@color/primary_light_beige"
-            android:textSize="30dp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/buttonContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="62dp" />
+            android:weightSum="2"
+            android:padding="4dp"
+            android:background="@drawable/rounded_layout"
+            app:layout_constraintTop_toBottomOf="@id/textView">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="107dp" />
+            <!-- Botón Ver Empleados -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/VerEmpleados"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:backgroundTint="@color/dark_caramel"
+                android:text="Empleados"
+                android:textColor="@color/light_cream"
+                android:textSize="12sp"
+                app:cornerRadius="8dp"
+                app:strokeColor="@color/dark_coffee"
+                app:strokeWidth="1dp"
+                app:rippleColor="@color/medium_wood" />
 
-        <Button
-            android:id="@+id/VerEmpleados"
-            android:layout_width="135dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="60dp"
-            android:text="Empleados"
-            android:backgroundTint="@color/dark_mocha"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <!-- Botón Ver Clientes -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/VerClientes"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:backgroundTint="@color/dark_coffee"
+                android:text="Clientes"
+                android:textColor="@color/primary_light_beige"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:cornerRadius="8dp"
+                app:rippleColor="@color/medium_wood" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/VerClientes"
-            android:layout_width="135dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="60dp"
-            android:text="Clientes"
-            android:backgroundTint="@color/dark_mocha"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.794"
-            app:layout_constraintStart_toEndOf="@+id/VerEmpleados"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView2"
-            android:name="com.example.zapateria_app.Fragments.EmpleadosFragment"
-            android:layout_width="363dp"
-            android:layout_height="555dp"
+        <!-- Contenedor de fragmentos -->
+        <FrameLayout
+            android:id="@+id/UserfragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@id/buttonContainer" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

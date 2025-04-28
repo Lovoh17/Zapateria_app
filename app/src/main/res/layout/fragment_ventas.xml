@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/accent_camel"
-    tools:context=".Fragments.VentasFragment">
+    tools:context=".Fragments.VentasFragment"
+    android:background="@drawable/fragment_border"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

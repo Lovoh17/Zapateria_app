@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zapateria_app.Adapters.ClienteAdapter;
 import com.example.zapateria_app.DAO.ClienteDAO;
-import com.example.zapateria_app.Dialog.DialogoCliente;
+import com.example.zapateria_app.Dialogs.DialogoCliente;
 import com.example.zapateria_app.Models.Cliente;
 import com.example.zapateria_app.R;
 import com.example.zapateria_app.database.databaseZapateria;

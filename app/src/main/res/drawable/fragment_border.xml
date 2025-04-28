@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/accent_camel"/> <!-- Mismo color de fondo -->
+    <corners
+        android:topLeftRadius="75dp"
+        android:topRightRadius="75dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp"/>
+</shape>
