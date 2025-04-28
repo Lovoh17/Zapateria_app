@@ -17,11 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.zapateria_app.Adapters.ProductoCompraAdapter;
 import com.example.zapateria_app.DAO.ProductoDAO;
 import com.example.zapateria_app.Dialogs.RegistrarProductoDialog;
+import com.example.zapateria_app.Models.InventarioActual;
+import com.example.zapateria_app.Models.MovimientoInventario;
 import com.example.zapateria_app.R;
 import com.example.zapateria_app.database.databaseZapateria;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -64,10 +69,21 @@ public class CompraInventarioFragment extends Fragment {
     }
 
     private void configurarListeners() {
-        adapter.setOnCompraChangeListener((totalItems, totalValue) -> {
-            this.totalValue = totalValue;
-            this.totalItems = totalItems;
-            btnComprar.setEnabled(totalItems > 0);
+        adapter.setOnCompraChangeListener(new ProductoCompraAdapter.OnCompraChangeListener() {
+            @Override
+            public void onCompraChanged(int totalItems, double totalValue) {
+                CompraInventarioFragment.this.totalValue = totalValue;
+                CompraInventarioFragment.this.totalItems = totalItems;
+                btnComprar.setEnabled(totalItems > 0);
+            }
+
+            @Override
+            public void onNuevoCostoChanged(int position, double nuevoCosto) {
+                // Actualizar el costo en la lista de productos
+                if (position >= 0 && position < listaProductos.size()) {
+                    listaProductos.get(position).setCostoPromedio(nuevoCosto);
+                }
+            }
         });
 
         btnComprar.setOnClickListener(v -> validarYConfirmarCompra());
@@ -85,12 +101,13 @@ public class CompraInventarioFragment extends Fragment {
     private void mostrarConfirmacionCompra() {
         List<ProductoDAO.ProductoConStock> productosSeleccionados = new ArrayList<>();
         List<Integer> cantidades = new ArrayList<>();
+        Map<Integer, Double> nuevosCostos = adapter.getNuevosCostos();
         obtenerProductosSeleccionados(productosSeleccionados, cantidades);
 
         new AlertDialog.Builder(getContext())
                 .setTitle("Confirmar Compra de Inventario")
                 .setMessage("¿Desea registrar la entrada de estos productos al inventario?")
-                .setPositiveButton("Confirmar", (dialog, which) -> procesarCompra(productosSeleccionados, cantidades))
+                .setPositiveButton("Confirmar", (dialog, which) -> procesarCompra(productosSeleccionados, cantidades, nuevosCostos))
                 .setNegativeButton("Cancelar", null)
                 .show();
     }
@@ -107,38 +124,88 @@ public class CompraInventarioFragment extends Fragment {
         }
     }
 
-    private void procesarCompra(List<ProductoDAO.ProductoConStock> productos, List<Integer> cantidades) {
+    private void procesarCompra(List<ProductoDAO.ProductoConStock> productos, List<Integer> cantidades, Map<Integer, Double> nuevosCostos) {
         progressBar.setVisibility(View.VISIBLE);
 
+        // Obtener fecha actual
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        String fechaActual = dateFormat.format(new Date());
+
         executor.execute(() -> {
-            try {
-                databaseZapateria db = databaseZapateria.getInstance(getContext());
-                ProductoDAO productoDAO = db.productoDAO();
+            databaseZapateria db = databaseZapateria.getInstance(getContext());
 
-                for (int i = 0; i < productos.size(); i++) {
-                    ProductoDAO.ProductoConStock producto = productos.get(i);
-                    int cantidad = cantidades.get(i);
+            db.runInTransaction(() -> {
+                try {
+                    for (int i = 0; i < productos.size(); i++) {
+                        ProductoDAO.ProductoConStock producto = productos.get(i);
+                        int cantidad = cantidades.get(i);
+                        double nuevoCosto = nuevosCostos.getOrDefault(producto.getId(), producto.getCostoPromedio());
 
-                    // Actualizar stock en inventario
-                    productoDAO.aumentarStock(producto.getId(), cantidad);
+                        if (cantidad <= 0) continue;
 
-                    // Actualizar costo promedio si es necesario
-                    actualizarCostoPromedio(productoDAO, producto, cantidad);
+                        // 1. Actualizar stock en inventario
+                        db.productoDAO().aumentarStock(producto.getId(), cantidad);
+
+                        // 2. Registrar movimiento de inventario
+                        MovimientoInventario movimiento = new MovimientoInventario(
+                                producto.getId(),
+                                "ENTRADA", // Tipo ENTRADA para compras
+                                cantidad,
+                                nuevoCosto, // Usar el nuevo costo ingresado
+                                fechaActual
+                        );
+                        db.movimientoInventarioDAO().insertMovimiento(movimiento);
+
+                        // 3. Actualizar costo promedio
+                        actualizarCostoPromedio(producto.getId(), cantidad, nuevoCosto);
+                    }
+
+                    requireActivity().runOnUiThread(() -> {
+                        mostrarResultadoExitoso();
+                        reiniciarSeleccion();
+                    });
+                } catch (Exception e) {
+                    requireActivity().runOnUiThread(() -> mostrarError(e));
+                    throw e;
                 }
-
-                requireActivity().runOnUiThread(() -> {
-                    mostrarResultadoExitoso();
-                    reiniciarSeleccion();
-                });
-            } catch (Exception e) {
-                requireActivity().runOnUiThread(() -> mostrarError(e));
-            }
+            });
         });
     }
 
-    private void actualizarCostoPromedio(ProductoDAO productoDAO, ProductoDAO.ProductoConStock producto, int cantidad) {
-        // Opcional: Lógica para actualizar costo promedio
-        //productoDAO.actualizarCostoPromedio(producto.getId(), producto.getCostoPromedio(), cantidad);
+    private void actualizarCostoPromedio(int productoId, int cantidad, double nuevoCosto) {
+        executor.execute(() -> {
+            databaseZapateria db = databaseZapateria.getInstance(getContext());
+            InventarioActual inventario = db.inventarioActualDAO().getInventarioByProductoId(productoId);
+
+            if (inventario != null) {
+                double stockActual = inventario.getStock();
+                double costoActual = inventario.getCostoPromedio();
+
+                // 1. Calcular nuevo costo promedio ponderado
+                double nuevoCostoPromedio =
+                        ((stockActual * costoActual) + (cantidad * nuevoCosto)) /
+                                (stockActual + cantidad);
+
+                // 2. Calcular nuevo precio con 20% de ganancia
+                double nuevoPrecio = nuevoCostoPromedio * 1.20; // Añadir 20% al costo
+
+                // 3. Actualizar ambos valores en la base de datos
+                db.runInTransaction(() -> {
+                    // Actualizar costo promedio
+                    db.inventarioActualDAO().actualizarCostoPromedio(productoId, nuevoCostoPromedio);
+
+                    // Actualizar precio del producto con el margen de ganancia
+                    db.productoDAO().actualizarPrecioProducto(productoId, nuevoPrecio);
+                });
+
+                // Opcional: Notificar a la UI si es necesario
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(getContext(),
+                            "Precio actualizado con 20% de ganancia",
+                            Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
 
     private void mostrarResultadoExitoso() {

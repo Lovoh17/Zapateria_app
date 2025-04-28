@@ -71,6 +71,9 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         ProductoDAO.ProductoConStock producto = productos.get(position);
         holder.bind(producto);
 
+        // Mostrar costo promedio del producto
+        holder.tvCosto.setText(String.format("Costo: $%.2f", producto.getCostoPromedio()));
+
         int cantidadActual = getCantidadSegura(position);
         holder.tvCantidad.setText(String.valueOf(cantidadActual));
 
@@ -123,7 +126,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
 
 
     public static class ProductoViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvNombre, tvMarca, tvTalla, tvPrecio, tvStock, tvProductCategory, tvCantidad;
+        private final TextView tvNombre, tvMarca, tvTalla, tvPrecio, tvStock, tvProductCategory, tvCantidad, tvCosto;
         private final ImageButton btnAddItem, btnRemoveItem;
 
         public ProductoViewHolder(@NonNull View itemView) {
@@ -135,6 +138,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             tvStock = itemView.findViewById(R.id.tvProductStock);
             tvProductCategory = itemView.findViewById(R.id.tvProductCategory);
             tvCantidad = itemView.findViewById(R.id.tvCantidad);
+            tvCosto = itemView.findViewById(R.id.tvProductCost); // Nuevo TextView para costo
             btnAddItem = itemView.findViewById(R.id.btnAddItem);
             btnRemoveItem = itemView.findViewById(R.id.btnRemoveItem);
         }
@@ -146,8 +150,10 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             tvPrecio.setText(String.format("$%.2f", producto.getPrecio()));
             tvStock.setText(String.format("Stock: %d", producto.getStock()));
             tvProductCategory.setText(producto.getNombreCategoria());
+            tvCosto.setText(String.format("Costo: $%.2f", producto.getCostoPromedio())); // Mostrar costo promedio
         }
     }
+
 
     public Map<Integer, Integer> getCantidadesSeleccionadas() {
         return new HashMap<>(cantidadesSeleccionadas);

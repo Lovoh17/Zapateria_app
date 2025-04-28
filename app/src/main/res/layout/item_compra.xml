@@ -108,6 +108,34 @@
                 android:textSize="14sp"/>
         </LinearLayout>
 
+        <!-- Nuevo campo editable para precio nuevo costo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Nuevo Costo:"
+                android:textColor="@color/dark_coffee"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/etNewCost"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:inputType="numberDecimal"
+                android:hint="Ingrese nuevo costo"
+                android:textAlignment="textEnd"
+                android:textColor="@color/dark_coffee"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
         <!-- Controles para cantidad a comprar -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -134,17 +162,6 @@
                 android:textAlignment="center"
                 android:textColor="@color/dark_coffee"
                 android:textSize="16sp"/>
-
-            <Button
-                android:id="@+id/btnAplicarCantidad"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:backgroundTint="@color/medium_wood"
-                android:text="Aplicar"
-                android:textColor="@color/white"
-                android:textSize="14sp"/>
         </LinearLayout>
 
         <TextView
