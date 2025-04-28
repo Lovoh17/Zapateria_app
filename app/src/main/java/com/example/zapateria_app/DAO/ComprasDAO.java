@@ -18,19 +18,15 @@ public interface ComprasDAO {
     @Insert
     void insertAll(List<Compra> compras);
 
-    // Actualizar una compra
     @Update
     void update(Compra compra);
 
-    // Eliminar una compra
     @Delete
     void delete(Compra compra);
 
-    // Obtener todas las compras ordenadas por fecha (más reciente primero)
     @Query("SELECT * FROM compras ORDER BY fechaCompra DESC")
     List<Compra> getAllCompras();
 
-    // Obtener una compra por ID
     @Query("SELECT * FROM compras WHERE id = :id")
     Compra getCompraById(int id);
 
@@ -42,9 +38,6 @@ public interface ComprasDAO {
     @Query("SELECT * FROM compras WHERE empleadoId = :empleadoId ORDER BY fechaCompra DESC")
     List<Compra> getComprasByEmpleado(int empleadoId);
 
-    // Obtener compras por rango de fechas
-    @Query("SELECT * FROM compras WHERE fechaCompra BETWEEN :desde AND :hasta ORDER BY fechaCompra DESC")
-    List<Compra> getComprasByFecha(long desde, long hasta);
 
     // Obtener compras por estado
     @Query("SELECT * FROM compras WHERE estado = :estado ORDER BY fechaCompra DESC")

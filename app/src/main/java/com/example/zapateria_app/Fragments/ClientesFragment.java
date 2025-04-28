@@ -37,7 +37,6 @@ public class ClientesFragment extends Fragment implements ClienteAdapter.OnClien
     private final Executor executor = Executors.newSingleThreadExecutor();
 
     public ClientesFragment() {
-        // Required empty public constructor
     }
 
 

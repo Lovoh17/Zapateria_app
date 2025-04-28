@@ -80,11 +80,8 @@ public class ConfirmarCompraInventarioDialog extends DialogFragment {
                     .create();
         }
 
-        // Formatear el total
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
-       // tvTotal.setText(getString(R.string.total_compra, currencyFormat.format(total)));
 
-        // Construir detalles de la compra
         StringBuilder detalles = new StringBuilder();
         for (int i = 0; i < productos.size(); i++) {
             ProductoDAO.ProductoConStock producto = productos.get(i);
@@ -116,14 +113,12 @@ public class ConfirmarCompraInventarioDialog extends DialogFragment {
     private void confirmarCompra() {
         if (listener != null) {
             try {
-                // Mostrar progreso mientras se procesa
                 AlertDialog dialog = (AlertDialog) getDialog();
                 if (dialog != null) {
                     dialog.findViewById(R.id.btnConfirmarCompraInventario).setEnabled(false);
                     dialog.findViewById(R.id.btnCancelarCompraInventario).setEnabled(false);
                 }
 
-                // Simular operación de guardado (reemplazar con lógica real)
                 new Thread(() -> {
                     try {
                         Thread.sleep(1500); // Simular tiempo de procesamiento

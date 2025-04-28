@@ -42,13 +42,13 @@ public class EmpleadoAdapter extends RecyclerView.Adapter<EmpleadoAdapter.Emplea
 
         holder.btnEditar.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onEditarClick(empleado); // Corregido: usar empleado en lugar de cliente
+                listener.onEditarClick(empleado);
             }
         });
 
         holder.btnBorrar.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onBorrarClick(empleado); // Corregido: usar empleado en lugar de cliente
+                listener.onBorrarClick(empleado);
             }
         });
     }

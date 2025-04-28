@@ -68,7 +68,6 @@ public class ConfirmarCompraDialog extends DialogFragment {
         dialog.cantidadesList = cantidades;
         dialog.total = total;
 
-        // Convertir la lista de cantidades a un mapa para compatibilidad con el adaptador existente
         dialog.cantidadesMap = new HashMap<>();
         for (int i = 0; i < productos.size(); i++) {
             dialog.cantidadesMap.put(i, cantidades.get(i));
@@ -107,7 +106,6 @@ public class ConfirmarCompraDialog extends DialogFragment {
         // Cargar clientes en el spinner
         cargarClientes(spinnerClientes);
 
-        // Configurar botones
         btnCancelar.setOnClickListener(v -> dismiss());
         btnConfirmar.setOnClickListener(v -> confirmarCompra(spinnerClientes));
 
@@ -221,7 +219,6 @@ public class ConfirmarCompraDialog extends DialogFragment {
 
                             // 3. Actualizar inventario (dos métodos alternativos)
 
-                            // Método 1: Actualización directa (más eficiente)
                             int filasActualizadas = db.inventarioActualDAO().disminuirStock(
                                     producto.getId(),
                                     cantidad

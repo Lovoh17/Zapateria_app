@@ -85,7 +85,6 @@ public class ProductoCompraAdapter extends RecyclerView.Adapter<ProductoCompraAd
             }
         });
 
-        // Configurar botón aplicar
         holder.btnAplicar.setOnClickListener(v -> {
             String cantidadStr = holder.etCantidad.getText().toString();
             if (!cantidadStr.isEmpty()) {

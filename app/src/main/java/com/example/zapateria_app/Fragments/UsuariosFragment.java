@@ -14,7 +14,6 @@ import com.example.zapateria_app.R;
 public class UsuariosFragment extends Fragment {
 
     public UsuariosFragment() {
-        // Required empty public constructor
     }
 
     public static UsuariosFragment newInstance() {
@@ -39,7 +38,6 @@ public class UsuariosFragment extends Fragment {
     }
 
     private void loadInitialFragment() {
-        // Solo cargar si no hay fragmento actual
         if (getChildFragmentManager().findFragmentById(R.id.UserfragmentContainer) == null) {
             loadFragment(new EmpleadosFragment());
         }

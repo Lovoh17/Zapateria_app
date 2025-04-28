@@ -138,7 +138,7 @@ public class CompraInventarioFragment extends Fragment {
 
     private void actualizarCostoPromedio(ProductoDAO productoDAO, ProductoDAO.ProductoConStock producto, int cantidad) {
         // Opcional: Lógica para actualizar costo promedio
-        // productoDAO.actualizarCostoPromedio(producto.getId(), producto.getCostoPromedio(), cantidad);
+        //productoDAO.actualizarCostoPromedio(producto.getId(), producto.getCostoPromedio(), cantidad);
     }
 
     private void mostrarResultadoExitoso() {

@@ -38,7 +38,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
             cantidadesSeleccionadas.put(i, 0);
         }
         notifyDataSetChanged();
-        actualizarTotales(); // Esto actualizará los totales a cero
+        actualizarTotales();
     }
 
     public ProductoAdapter(List<ProductoDAO.ProductoConStock> productos, Context context) {
@@ -71,7 +71,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
         ProductoDAO.ProductoConStock producto = productos.get(position);
         holder.bind(producto);
 
-        // Obtener cantidad actual con valor por defecto 0
         int cantidadActual = getCantidadSegura(position);
         holder.tvCantidad.setText(String.valueOf(cantidadActual));
 
