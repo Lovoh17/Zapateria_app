@@ -32,6 +32,7 @@ public class MovimientoInventarioFragment extends Fragment {
     private Executor executor = Executors.newSingleThreadExecutor();
 
     public MovimientoInventarioFragment() {
+        // Required empty public constructor
     }
 
     public static MovimientoInventarioFragment newInstance() {
@@ -47,6 +48,7 @@ public class MovimientoInventarioFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvMovimientos);
         progressBar = view.findViewById(R.id.progressBar);
 
+        // Configurar RecyclerView
         setupRecyclerView();
 
         // Cargar datos
@@ -97,6 +99,7 @@ public class MovimientoInventarioFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        // Recargar datos cuando el fragment se vuelve visible
         cargarMovimientos();
     }
 }
