@@ -27,14 +27,20 @@ import com.example.zapateria_app.DAO.VentaDAO;
 import com.example.zapateria_app.Models.Cliente;
 import com.example.zapateria_app.Models.DetalleVenta;
 import com.example.zapateria_app.Models.InventarioActual;
+import com.example.zapateria_app.Models.MovimientoInventario;
 import com.example.zapateria_app.Models.Venta;
 import com.example.zapateria_app.database.databaseZapateria;
 import com.example.zapateria_app.R;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -177,6 +183,10 @@ public class ConfirmarCompraDialog extends DialogFragment {
         int clienteId = clienteIds.get(selectedPosition);
         Log.d("ConfirmarCompra", "Cliente seleccionado - ID: " + clienteId);
 
+        // Obtener fecha actual
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        String fechaActual = dateFormat.format(new Date());
+
         executor.execute(() -> {
             databaseZapateria db = databaseZapateria.getInstance(getContext());
 
@@ -191,7 +201,6 @@ public class ConfirmarCompraDialog extends DialogFragment {
 
                     for (int i = 0; i < productos.size(); i++) {
                         try {
-
                             if (i >= cantidadesList.size()) {
                                 Log.e("ConfirmarCompra", "Índice fuera de rango en cantidadesList");
                                 continue;
@@ -217,8 +226,7 @@ public class ConfirmarCompraDialog extends DialogFragment {
                                         ". Stock actual: " + inventario.getStock() + ", solicitado: " + cantidad);
                             }
 
-                            // 3. Actualizar inventario (dos métodos alternativos)
-
+                            // 3. Actualizar inventario
                             int filasActualizadas = db.inventarioActualDAO().disminuirStock(
                                     producto.getId(),
                                     cantidad
@@ -228,9 +236,17 @@ public class ConfirmarCompraDialog extends DialogFragment {
                                 throw new Exception("No se pudo actualizar el inventario para el producto ID: " + producto.getId());
                             }
 
-                            InventarioActual inventarioVerificado = db.inventarioActualDAO().getInventarioByProductoId(producto.getId());
-                            Log.d("ConfirmarCompra", "Stock verificado - Anterior: " + inventario.getStock() +
-                                    ", Nuevo: " + inventarioVerificado.getStock());
+                            // 4. Registrar movimiento de inventario (SALIDA)
+                            MovimientoInventario movimiento = new MovimientoInventario(
+                                    producto.getId(),
+                                    "SALIDA",
+                                    cantidad,
+                                    producto.getPrecio(), // Asumiendo que getCosto() devuelve el costo unitario
+                                    fechaActual
+                            );
+
+                            db.movimientoInventarioDAO().insertMovimiento(movimiento);
+                            Log.d("ConfirmarCompra", "Movimiento de inventario registrado para producto ID: " + producto.getId());
 
                             // 5. Insertar detalle de venta
                             DetalleVenta detalle = new DetalleVenta(
@@ -277,8 +293,8 @@ public class ConfirmarCompraDialog extends DialogFragment {
             throw new Exception("Cliente no encontrado en la base de datos");
         }
 
-        // Crear y insertar venta
-        String fechaActual = "hoy";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        String fechaActual = dateFormat.format(new Date());
 
         Venta nuevaVenta = new Venta(
                 clienteSeleccionado.getId(),
