@@ -32,7 +32,7 @@ public class MovimientoInventarioFragment extends Fragment {
     private Executor executor = Executors.newSingleThreadExecutor();
 
     public MovimientoInventarioFragment() {
-        // Required empty public constructor
+
     }
 
     public static MovimientoInventarioFragment newInstance() {
